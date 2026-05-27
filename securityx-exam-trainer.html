@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CompTIA SecurityX CAS-005 Exam Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --panel: rgba(15, 23, 42, 0.5);
+    --border: rgba(51, 65, 85, 0.5);
+    --border-bright: rgba(71, 85, 105, 0.8);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --cyan: #22d3ee;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --orange: #fb923c;
+    --green: #4ade80;
+    --emerald: #34d399;
+    --red: #f87171;
+    --amber: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(167, 139, 250, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 139, 250, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 25%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 70%);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-2 {
+    position: fixed;
+    bottom: 0; right: 25%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.15) 0%, transparent 70%);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; position: relative; z-index: 1; }
+  @media (min-width: 768px) { .container { padding: 2rem; } }
+
+  header { border-bottom: 1px solid rgba(167, 139, 250, 0.2); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: 0.75rem; }
+  .logo-icon { width: 40px; height: 40px; border-radius: 4px; background: linear-gradient(135deg, var(--purple), var(--pink)); display: flex; align-items: center; justify-content: center; color: #0a0e1a; }
+  .logo h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .logo h1 .accent { color: var(--purple); }
+  .logo .subtitle { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.15em; margin-top: 0.15rem; }
+  @media (min-width: 768px) { .logo h1 { font-size: 1.875rem; } }
+  .back-btn { font-size: 0.7rem; color: var(--purple); border: 1px solid rgba(167, 139, 250, 0.3); background: transparent; padding: 0.5rem 0.75rem; border-radius: 4px; cursor: pointer; font-family: inherit; letter-spacing: 0.1em; transition: all 0.2s; }
+  .back-btn:hover { border-color: var(--purple); color: #c4b5fd; }
+
+  .section-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.15em; margin-bottom: 0.75rem; }
+
+  .panel { border: 1px solid var(--border); border-radius: 4px; background: var(--panel); backdrop-filter: blur(10px); padding: 1.5rem; }
+  .panel-bright { border-color: rgba(167, 139, 250, 0.3); }
+
+  .status-banner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .status-banner h2 { font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+  .status-info { font-size: 0.875rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+  .mode-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (min-width: 768px) { .mode-grid { grid-template-columns: repeat(3, 1fr); } }
+  .mode-card { border: 1px solid var(--border); border-radius: 4px; background: rgba(15, 23, 42, 0.4); padding: 1.25rem; cursor: pointer; text-align: left; transition: all 0.2s; color: inherit; font-family: inherit; }
+  .mode-card:hover { transform: translateY(-2px); background: rgba(15, 23, 42, 0.7); }
+  .mode-card[data-color="purple"]:hover { border-color: var(--purple); }
+  .mode-card[data-color="pink"]:hover { border-color: var(--pink); }
+  .mode-card[data-color="orange"]:hover { border-color: var(--orange); }
+  .mode-card .mode-icon { width: 28px; height: 28px; margin-bottom: 0.75rem; }
+  .mode-card[data-color="purple"] .mode-icon, .mode-card[data-color="purple"] .mode-title { color: var(--purple); }
+  .mode-card[data-color="pink"] .mode-icon, .mode-card[data-color="pink"] .mode-title { color: var(--pink); }
+  .mode-card[data-color="orange"] .mode-icon, .mode-card[data-color="orange"] .mode-title { color: var(--orange); }
+  .mode-card .mode-title { font-weight: 700; font-size: 1.125rem; letter-spacing: 0.05em; }
+  .mode-card .mode-subtitle { font-size: 0.7rem; color: var(--text-dim); margin: 0.25rem 0 0.75rem; }
+  .mode-card .mode-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+
+  .domain-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  @media (min-width: 768px) { .domain-grid { grid-template-columns: repeat(2, 1fr); } }
+  .domain-card { border: 1px solid var(--border); border-radius: 4px; background: rgba(15, 23, 42, 0.3); padding: 1rem; transition: border-color 0.2s; }
+  .domain-card:hover { border-color: var(--border-bright); }
+  .domain-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .domain-card-info { display: flex; align-items: center; gap: 0.75rem; }
+  .domain-icon { width: 20px; height: 20px; }
+  .domain-name { font-size: 0.875rem; font-weight: 600; }
+  .domain-weight { font-size: 0.7rem; color: var(--text-muted); }
+  .domain-pct { font-size: 1.125rem; font-weight: 700; text-align: right; }
+  .domain-frac { font-size: 0.7rem; color: var(--text-muted); text-align: right; }
+  .progress-bar { height: 6px; background: rgba(30, 41, 59, 0.8); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; transition: width 0.5s ease; border-radius: 999px; }
+
+  .btn { border: 1px solid var(--border); background: rgba(15, 23, 42, 0.4); color: var(--text-dim); padding: 0.625rem 1rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; letter-spacing: 0.1em; transition: all 0.2s; }
+  .btn:hover { border-color: var(--border-bright); color: var(--text); }
+  .btn-primary { background: linear-gradient(90deg, var(--purple), var(--pink)); color: #0a0e1a; font-weight: 700; border: none; padding: 1rem 1.5rem; width: 100%; font-size: 0.875rem; letter-spacing: 0.15em; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  .btn-primary:hover { background: linear-gradient(90deg, #c4b5fd, #f9a8d4); }
+  .btn-purple { border-color: rgba(167, 139, 250, 0.4); color: var(--purple); }
+  .btn-purple:hover { border-color: var(--purple); color: #c4b5fd; }
+  .btn-danger { border-color: rgba(248, 113, 113, 0.3); color: var(--red); }
+  .btn-danger:hover { border-color: var(--red); color: #fca5a5; }
+  .btn-confirm { background: var(--red); color: #0a0e1a; font-weight: 700; border: none; }
+
+  .mode-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1.5rem; }
+  .mode-tab { padding: 0.875rem; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.1em; border: 1px solid var(--border); background: rgba(15, 23, 42, 0.3); color: var(--text-dim); border-radius: 4px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .mode-tab:hover { background: rgba(15, 23, 42, 0.6); }
+  .mode-tab.active { background: rgba(30, 41, 59, 0.8); }
+  .mode-tab.active[data-mode="study"] { border-color: var(--purple); color: var(--purple); }
+  .mode-tab.active[data-mode="practice"] { border-color: var(--pink); color: var(--pink); }
+  .mode-tab.active[data-mode="exam"] { border-color: var(--orange); color: var(--orange); }
+
+  .config-label { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .domain-tabs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 1.5rem; }
+  @media (min-width: 768px) { .domain-tabs { grid-template-columns: repeat(3, 1fr); } }
+  .domain-tab { padding: 0.75rem; font-size: 0.7rem; border: 1px solid var(--border); background: rgba(15, 23, 42, 0.3); color: var(--text-dim); border-radius: 4px; cursor: pointer; font-family: inherit; text-align: left; transition: all 0.2s; }
+  .domain-tab:hover { background: rgba(15, 23, 42, 0.6); }
+  .domain-tab.active { background: rgba(30, 41, 59, 0.8); }
+  .domain-tab .tab-weight { font-size: 0.625rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+  .count-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 1.5rem; }
+  .count-tab { padding: 0.625rem; font-size: 0.875rem; border: 1px solid var(--border); background: rgba(15, 23, 42, 0.3); color: var(--text-dim); border-radius: 4px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .count-tab:hover { background: rgba(15, 23, 42, 0.6); }
+  .count-tab.active { border-color: var(--purple); color: var(--purple); background: rgba(30, 41, 59, 0.8); }
+
+  .weak-toggle { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; cursor: pointer; }
+  .weak-toggle input { width: 16px; height: 16px; accent-color: var(--purple); cursor: pointer; }
+  .weak-toggle-text { font-size: 0.875rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
+  .weak-toggle-sub { font-size: 0.7rem; color: var(--text-muted); }
+
+  .quiz-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.75rem; margin-bottom: 1rem; }
+  .quiz-topbar-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .domain-badge { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.375rem 0.75rem; border: 1px solid; border-radius: 4px; font-weight: 700; letter-spacing: 0.1em; }
+  .domain-badge .icon { width: 12px; height: 12px; }
+  .timer-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem; border: 1px solid rgba(251, 191, 36, 0.5); color: var(--amber); border-radius: 4px; font-weight: 700; }
+  .timer-badge.warn { border-color: var(--red); color: var(--red); animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  .progress-thin { height: 4px; background: rgba(30, 41, 59, 0.8); border-radius: 999px; overflow: hidden; margin-bottom: 1rem; }
+  .progress-thin-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width 0.3s; border-radius: 999px; }
+
+  .question-panel { border: 1px solid var(--border); border-radius: 4px; background: var(--panel); backdrop-filter: blur(10px); padding: 1.5rem; margin-bottom: 1rem; }
+  @media (min-width: 768px) { .question-panel { padding: 2rem; } }
+  .question-header { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .question-text { font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.6; color: #f1f5f9; flex: 1; }
+  @media (min-width: 768px) { .question-text { font-size: 1.0625rem; } }
+  .flag-btn { flex-shrink: 0; padding: 0.5rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+  .flag-btn:hover { border-color: rgba(251, 191, 36, 0.5); color: var(--amber); }
+  .flag-btn.flagged { border-color: var(--amber); color: var(--amber); background: rgba(251, 191, 36, 0.1); }
+
+  .choices { display: flex; flex-direction: column; gap: 0.625rem; }
+  .choice { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; border: 1px solid var(--border); background: transparent; border-radius: 4px; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; color: var(--text); transition: all 0.2s; width: 100%; }
+  .choice:hover:not(:disabled):not(.locked) { border-color: var(--border-bright); background: rgba(30, 41, 59, 0.4); }
+  .choice .choice-letter { flex-shrink: 0; width: 28px; height: 28px; border: 1px solid currentColor; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .choice .choice-text { flex: 1; font-size: 0.875rem; line-height: 1.5; }
+  .choice .choice-icon { flex-shrink: 0; width: 20px; height: 20px; }
+  .choice.selected { border-color: var(--purple); background: rgba(167, 139, 250, 0.1); color: #c4b5fd; }
+  .choice.correct { border-color: var(--emerald); background: rgba(52, 211, 153, 0.1); color: #6ee7b7; }
+  .choice.incorrect { border-color: var(--red); background: rgba(248, 113, 113, 0.1); color: #fca5a5; }
+  .choice.reveal-correct { border-color: rgba(52, 211, 153, 0.6); background: rgba(52, 211, 153, 0.05); color: #a7f3d0; }
+  .choice:disabled, .choice.locked { cursor: default; }
+
+  .feedback { margin-top: 1.5rem; padding: 1rem; border-left: 2px solid; border-radius: 0 4px 4px 0; font-family: 'Inter', sans-serif; }
+  .feedback.correct { border-color: var(--emerald); background: rgba(52, 211, 153, 0.05); }
+  .feedback.incorrect { border-color: var(--red); background: rgba(248, 113, 113, 0.05); }
+  .feedback-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 0.5rem; font-family: 'JetBrains Mono', monospace; }
+  .feedback.correct .feedback-label { color: var(--emerald); }
+  .feedback.incorrect .feedback-label { color: var(--red); }
+  .feedback-text { font-size: 0.875rem; color: #cbd5e1; line-height: 1.6; }
+
+  .nav-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 1rem; }
+  .nav-counter { font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .btn-nav { padding: 0.625rem 1rem; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; letter-spacing: 0.1em; transition: all 0.2s; }
+  .btn-nav:hover:not(:disabled) { border-color: var(--border-bright); }
+  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-next { background: var(--purple); color: #0a0e1a; border: none; font-weight: 700; padding: 0.625rem 1.25rem; }
+  .btn-next:hover { background: #c4b5fd; }
+  .btn-submit { background: var(--emerald); color: #0a0e1a; border: none; font-weight: 700; padding: 0.625rem 1.25rem; }
+  .btn-submit:hover { background: #6ee7b7; }
+
+  .quick-nav { border: 1px solid rgba(51, 65, 85, 0.3); border-radius: 4px; background: rgba(15, 23, 42, 0.3); padding: 1rem; }
+  .quick-nav-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.375rem; }
+  @media (min-width: 768px) { .quick-nav-grid { grid-template-columns: repeat(15, 1fr); } }
+  .quick-nav-btn { aspect-ratio: 1; font-size: 0.625rem; border: 1px solid var(--border); background: transparent; color: var(--text-muted); border-radius: 4px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .quick-nav-btn:hover { border-color: var(--border-bright); }
+  .quick-nav-btn.answered { border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.05); color: var(--emerald); }
+  .quick-nav-btn.flagged { border-color: rgba(251, 191, 36, 0.6); background: rgba(251, 191, 36, 0.1); color: var(--amber); }
+  .quick-nav-btn.current { border-color: var(--purple); background: rgba(167, 139, 250, 0.3); color: #c4b5fd; }
+
+  .score-banner { border: 2px solid; border-radius: 4px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
+  .score-banner.passed { border-color: var(--emerald); background: rgba(52, 211, 153, 0.05); }
+  .score-banner.failed { border-color: var(--amber); background: rgba(251, 191, 36, 0.05); }
+  .score-banner-label { font-size: 0.7rem; letter-spacing: 0.15em; margin-bottom: 0.75rem; }
+  .score-banner.passed .score-banner-label { color: var(--emerald); }
+  .score-banner.failed .score-banner-label { color: var(--amber); }
+  .score-display { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .score-icon { width: 48px; height: 48px; }
+  .score-banner.passed .score-icon { color: var(--emerald); }
+  .score-banner.failed .score-icon { color: var(--amber); }
+  .score-number { font-size: 4.5rem; font-weight: 700; line-height: 1; }
+  .score-banner.passed .score-number { color: var(--emerald); }
+  .score-banner.failed .score-number { color: var(--amber); }
+  .score-percent { font-size: 1.5rem; color: var(--text-muted); }
+  .score-fraction { font-size: 1.25rem; color: var(--text); margin-bottom: 0.25rem; }
+  .score-meta { font-size: 0.875rem; color: var(--text-dim); }
+  .score-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; }
+
+  .review-section { margin-bottom: 1.5rem; }
+  .review-item { border: 1px solid rgba(248, 113, 113, 0.2); background: rgba(248, 113, 113, 0.05); border-radius: 4px; margin-bottom: 0.75rem; }
+  .review-summary { padding: 1rem; cursor: pointer; font-size: 0.875rem; color: #f1f5f9; font-family: 'Inter', sans-serif; list-style: none; transition: background 0.2s; }
+  .review-summary::-webkit-details-marker { display: none; }
+  .review-item[open] .review-summary, .review-summary:hover { background: rgba(248, 113, 113, 0.1); }
+  .review-badge { display: inline-block; font-size: 0.625rem; padding: 0.15rem 0.5rem; border: 1px solid; border-radius: 3px; margin-right: 0.5rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; vertical-align: middle; }
+  .review-body { padding: 0 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 0.875rem; }
+  .review-body .your-ans { color: #fca5a5; }
+  .review-body .correct-ans { color: #6ee7b7; }
+  .review-body .ans-label { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-right: 0.25rem; }
+  .review-body .explanation { color: var(--text-dim); border-left: 2px solid rgba(167, 139, 250, 0.5); padding-left: 0.75rem; margin-top: 0.5rem; line-height: 1.6; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  @media (min-width: 768px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat-card { border: 1px solid var(--border); border-radius: 4px; background: rgba(15, 23, 42, 0.3); padding: 1rem; }
+  .stat-card-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .stat-card-value { font-size: 1.875rem; font-weight: 700; }
+
+  .session-table { border: 1px solid var(--border); border-radius: 4px; background: rgba(15, 23, 42, 0.3); overflow: hidden; }
+  .session-row { display: grid; grid-template-columns: 3fr 2fr 2fr 2fr 3fr; gap: 0.5rem; padding: 0.75rem 1rem; font-size: 0.75rem; border-bottom: 1px solid rgba(30, 41, 59, 0.5); }
+  .session-row:last-child { border-bottom: none; }
+  .session-row.header { color: var(--text-muted); font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); }
+  .session-row.data:hover { background: rgba(30, 41, 59, 0.3); }
+  .session-mode { text-transform: uppercase; }
+  .session-score.high { color: var(--emerald); font-weight: 700; }
+  .session-score.mid { color: var(--amber); font-weight: 700; }
+  .session-score.low { color: var(--red); font-weight: 700; }
+
+  .actions-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .actions-row > .btn { flex: 1; min-width: 150px; padding: 0.875rem; font-size: 0.8125rem; font-weight: 700; }
+  .footer-note { text-align: center; font-size: 0.7rem; color: var(--text-muted); padding-top: 1rem; margin-top: 1.5rem; }
+  .hidden { display: none !important; }
+  .reset-confirm-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .reset-confirm-row .warning { font-size: 0.7rem; color: var(--red); }
+  .reset-actions { display: flex; justify-content: flex-end; margin-top: 1rem; }
+  .icon-sm { width: 16px; height: 16px; }
+  .icon-md { width: 20px; height: 20px; }
+  .icon-lg { width: 24px; height: 24px; }
+  svg { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .stack > * + * { margin-top: 1.5rem; }
+  .stack-sm > * + * { margin-top: 0.75rem; }
+</style>
+</head>
+<body>
+<div class="glow-2"></div>
+
+<div class="container">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7v6c0 5 4 9 10 9s10-4 10-9V7L12 2z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <h1><span class="accent">SecurityX</span> CAS-005</h1>
+        <div class="subtitle">// EXAM TRAINER · ADVANCED SECURITY PRACTITIONER</div>
+      </div>
+    </div>
+    <button id="back-btn" class="back-btn hidden">← MAIN_CONSOLE</button>
+  </header>
+
+  <main id="view-home" class="stack">
+    <div class="panel panel-bright status-banner">
+      <div>
+        <div class="section-label">// CAREER_STATUS</div>
+        <h2 id="status-title"></h2>
+        <div id="status-info" class="status-info"></div>
+      </div>
+      <div>
+        <button id="analytics-btn" class="btn btn-purple">
+          <svg viewBox="0 0 24 24" width="14" height="14" style="display:inline; vertical-align: middle; margin-right: 4px;"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+          ANALYTICS
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">// SELECT_OPERATING_MODE</div>
+      <div class="mode-grid">
+        <button class="mode-card" data-color="purple" data-action="study">
+          <svg class="mode-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <div class="mode-title">STUDY</div>
+          <div class="mode-subtitle">Learn with explanations</div>
+          <div class="mode-desc">Immediate feedback after each answer. Best for first-pass learning.</div>
+        </button>
+        <button class="mode-card" data-color="pink" data-action="practice">
+          <svg class="mode-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <div class="mode-title">PRACTICE</div>
+          <div class="mode-subtitle">Domain-focused drills</div>
+          <div class="mode-desc">Pick a domain and question count. Score shown at the end.</div>
+        </button>
+        <button class="mode-card" data-color="orange" data-action="exam">
+          <svg class="mode-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="mode-title">EXAM SIM</div>
+          <div class="mode-subtitle">165 min · 90 questions</div>
+          <div class="mode-desc">Timed full-length simulation matching the real SecurityX exam.</div>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">// DOMAIN_BREAKDOWN</div>
+      <div id="domain-breakdown" class="domain-grid"></div>
+    </div>
+
+    <div class="footer-note">
+      <span id="question-count-label"></span> · 4 domains · CAS-005 (V3.0) blueprint
+    </div>
+  </main>
+
+  <main id="view-mode" class="stack hidden">
+    <div>
+      <div class="section-label">// CONFIGURE_SESSION</div>
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="study">STUDY</button>
+        <button class="mode-tab" data-mode="practice">PRACTICE</button>
+        <button class="mode-tab" data-mode="exam">EXAM SIM</button>
+      </div>
+      <div class="config-label">DOMAIN</div>
+      <div id="domain-tabs" class="domain-tabs"></div>
+      <div id="count-section">
+        <div class="config-label">QUESTION COUNT</div>
+        <div class="count-tabs">
+          <button class="count-tab" data-count="10">10</button>
+          <button class="count-tab active" data-count="25">25</button>
+          <button class="count-tab" data-count="50">50</button>
+          <button class="count-tab" data-count="75">75</button>
+          <button class="count-tab" data-count="100">100</button>
+        </div>
+      </div>
+      <label id="weak-toggle" class="weak-toggle hidden">
+        <input type="checkbox" id="weak-checkbox" />
+        <div>
+          <div class="weak-toggle-text">
+            <svg width="16" height="16" viewBox="0 0 24 24" style="color: var(--orange);"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            Prioritize weak areas
+          </div>
+          <div class="weak-toggle-sub">Pull questions you've missed or haven't seen first</div>
+        </div>
+      </label>
+      <button id="start-btn" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        INITIATE SESSION
+      </button>
+    </div>
+  </main>
+
+  <main id="view-quiz" class="hidden">
+    <div class="quiz-topbar">
+      <div class="quiz-topbar-left">
+        <div id="domain-badge" class="domain-badge"></div>
+        <div id="q-counter" style="color: var(--text-dim);"></div>
+        <div id="answered-counter" style="color: var(--text-muted);"></div>
+        <div id="flagged-counter" style="color: var(--amber); display: none;"></div>
+      </div>
+      <div id="timer" class="timer-badge hidden">
+        <svg width="12" height="12" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="timer-text"></span>
+      </div>
+    </div>
+    <div class="progress-thin"><div id="progress-fill" class="progress-thin-fill"></div></div>
+    <div class="question-panel">
+      <div class="question-header">
+        <div id="question-text" class="question-text"></div>
+        <button id="flag-btn" class="flag-btn" title="Flag for review">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </button>
+      </div>
+      <div id="choices" class="choices"></div>
+      <div id="feedback" class="hidden"></div>
+    </div>
+    <div class="nav-row">
+      <button id="prev-btn" class="btn-nav">← PREV</button>
+      <div id="nav-counter" class="nav-counter"></div>
+      <button id="next-btn" class="btn-next">NEXT →</button>
+    </div>
+    <div id="quick-nav-section" class="quick-nav hidden">
+      <div class="section-label">// QUICK_NAV</div>
+      <div id="quick-nav-grid" class="quick-nav-grid"></div>
+    </div>
+  </main>
+
+  <main id="view-results" class="stack hidden">
+    <div id="score-banner" class="score-banner">
+      <div id="score-label" class="score-banner-label"></div>
+      <div class="score-display">
+        <svg id="score-icon" class="score-icon" viewBox="0 0 24 24"></svg>
+        <div><span id="score-num" class="score-number"></span><span class="score-percent">%</span></div>
+      </div>
+      <div id="score-fraction" class="score-fraction"></div>
+      <div id="score-meta" class="score-meta"></div>
+      <div id="score-note" class="score-note"></div>
+    </div>
+    <div>
+      <div class="section-label">// DOMAIN_RESULTS</div>
+      <div id="domain-results" class="domain-grid"></div>
+    </div>
+    <div id="review-section" class="review-section hidden">
+      <div id="review-label" class="section-label"></div>
+      <div id="review-list"></div>
+    </div>
+    <div class="actions-row">
+      <button id="results-home" class="btn">MAIN CONSOLE</button>
+      <button id="results-retry" class="btn-primary" style="width: auto; flex: 1;">
+        <svg width="14" height="14" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        RETRY (WEAK AREAS)
+      </button>
+    </div>
+  </main>
+
+  <main id="view-stats" class="stack hidden">
+    <div id="stat-overview" class="stat-grid"></div>
+    <div>
+      <div class="section-label">// DOMAIN_ACCURACY</div>
+      <div id="stats-domains" class="stack-sm"></div>
+    </div>
+    <div id="stats-sessions-wrap" class="hidden">
+      <div class="section-label">// SESSION_LOG</div>
+      <div id="stats-sessions" class="session-table"></div>
+    </div>
+    <div class="reset-actions" id="reset-section"></div>
+  </main>
+</div>
+
+<script>
+const DOMAINS = {
+  GRC: { id: "GRC", name: "Governance, Risk, Compliance",  short: "GRC",          weight: "20%", color: "#22d3ee", iconPath: '<path d="M12 2L2 7v6c0 5 4 9 10 9s10-4 10-9V7L12 2z"/><path d="M9 12l2 2 4-4"/>' },
+  ARC: { id: "ARC", name: "Security Architecture",         short: "Architecture", weight: "27%", color: "#a78bfa", iconPath: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>' },
+  ENG: { id: "ENG", name: "Security Engineering",          short: "Engineering",  weight: "31%", color: "#f472b6", iconPath: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
+  OPS: { id: "OPS", name: "Security Operations",           short: "Operations",   weight: "22%", color: "#fb923c", iconPath: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' },
+};
+
+const QUESTIONS = [
+  // ============ GOVERNANCE, RISK, COMPLIANCE (36) ============
+  { id: 1, domain: "GRC", q: "Which framework provides a six-step Risk Management Framework (RMF) widely adopted in federal information systems?", choices: ["NIST SP 800-37", "ISO 31000", "COBIT 2019", "PCI-DSS"], a: 0, exp: "NIST SP 800-37 defines the RMF: Categorize, Select, Implement, Assess, Authorize, Monitor. ISO 31000 is risk management principles; COBIT is IT governance." },
+  { id: 2, domain: "GRC", q: "An organization quantifies risk using ALE (Annualized Loss Expectancy). The formula is:", choices: ["SLE × ARO", "AV × EF", "SLE / ARO", "ARO × AV"], a: 0, exp: "ALE = SLE (Single Loss Expectancy) × ARO (Annualized Rate of Occurrence). SLE itself = AV × EF (Asset Value × Exposure Factor)." },
+  { id: 3, domain: "GRC", q: "Which risk treatment strategy buys cyber insurance to offset financial impact?", choices: ["Avoid", "Mitigate", "Transfer", "Accept"], a: 2, exp: "Transferring risk shifts financial impact to a third party (insurance, contracts). Mitigation reduces; avoidance eliminates the activity; acceptance absorbs the risk." },
+  { id: 4, domain: "GRC", q: "Which regulation imposes notification requirements within 72 hours of a personal data breach in the EU?", choices: ["HIPAA", "GDPR", "SOX", "GLBA"], a: 1, exp: "GDPR Article 33 requires controllers to notify the supervisory authority within 72 hours of becoming aware of a breach." },
+  { id: 5, domain: "GRC", q: "An organization processes EU resident data from servers in the US. Which mechanism may legally permit the transfer?", choices: ["Privacy notice only", "Standard Contractual Clauses (SCCs)", "AUP", "MOU"], a: 1, exp: "After Schrems II, SCCs (combined with supplementary measures) are a primary lawful transfer mechanism, alongside adequacy decisions like the EU-US Data Privacy Framework." },
+  { id: 6, domain: "GRC", q: "Which document type captures specific, mandatory implementation requirements?", choices: ["Policy", "Standard", "Guideline", "Procedure"], a: 1, exp: "Policy = high-level intent. Standard = mandatory specifics. Procedure = step-by-step. Guideline = recommended (non-mandatory)." },
+  { id: 7, domain: "GRC", q: "Which is a primary purpose of a Data Protection Impact Assessment (DPIA)?", choices: ["Test backups", "Identify and mitigate privacy risks before processing personal data", "Reset passwords", "Audit firewall rules"], a: 1, exp: "DPIAs (required under GDPR for high-risk processing) systematically evaluate privacy risks and required mitigations before processing begins." },
+  { id: 8, domain: "GRC", q: "Under SOX, who is ultimately responsible for the accuracy of financial reporting controls?", choices: ["IT staff", "External auditors", "CEO and CFO", "Board secretary"], a: 2, exp: "Sarbanes-Oxley sections 302 and 404 require CEO and CFO certification of financial reports and internal controls." },
+  { id: 9, domain: "GRC", q: "Which ISO standard provides an Information Security Management System (ISMS) framework?", choices: ["ISO 9001", "ISO 27001", "ISO 31000", "ISO 22301"], a: 1, exp: "ISO/IEC 27001 specifies ISMS requirements. ISO 27002 is the controls catalog; ISO 22301 covers business continuity; ISO 31000 is risk management." },
+  { id: 10, domain: "GRC", q: "An organization maps controls from NIST CSF to specific implementation in NIST SP 800-53. This activity is best described as:", choices: ["Risk acceptance", "Control crosswalk / mapping", "Penetration testing", "Vulnerability scanning"], a: 1, exp: "Control crosswalks link controls across frameworks (CSF → 800-53 → ISO 27001 → CIS) to avoid duplicate effort and demonstrate coverage." },
+  { id: 11, domain: "GRC", q: "Which assessment requires the explicit involvement of third-party vendors handling sensitive data?", choices: ["DR test", "Third-party / supplier risk assessment (TPRM)", "Pen test of internal systems", "Phishing campaign"], a: 1, exp: "TPRM evaluates supplier controls, contracts, and ongoing performance — increasingly critical due to supply-chain attacks (e.g., SolarWinds)." },
+  { id: 12, domain: "GRC", q: "Which CSF function (NIST CSF 2.0) was added to the original five?", choices: ["Identify", "Govern", "Detect", "Respond"], a: 1, exp: "NIST CSF 2.0 (2024) added Govern as a sixth core function around Identify, Protect, Detect, Respond, Recover — emphasizing strategic oversight." },
+  { id: 13, domain: "GRC", q: "A Service Organization Control 2 (SOC 2) Type II report differs from Type I in that it:", choices: ["Covers a point in time only", "Tests operating effectiveness over a period (typically 6–12 months)", "Is performed by internal audit", "Replaces ISO 27001"], a: 1, exp: "Type I = design at a point in time. Type II = both design and operating effectiveness over a period, providing higher assurance." },
+  { id: 14, domain: "GRC", q: "Which is the primary purpose of an RTO during BIA?", choices: ["Define data loss tolerance", "Define maximum acceptable downtime for a process", "Calculate annual loss", "Set patching cadence"], a: 1, exp: "Recovery Time Objective specifies how quickly a process must be restored. RPO addresses data loss tolerance." },
+  { id: 15, domain: "GRC", q: "Quantitative risk analysis differs from qualitative in that it:", choices: ["Uses subjective high/medium/low ratings", "Assigns numeric values (probability × impact in dollars)", "Avoids dollar figures", "Cannot be repeated"], a: 1, exp: "Quantitative uses numeric/monetary values (ALE, ROI). Qualitative uses descriptive scales (low/med/high) and is faster but less precise." },
+  { id: 16, domain: "GRC", q: "Which AI-related risk concern is most associated with training data?", choices: ["Cooling capacity", "Bias and data poisoning", "GPU pricing", "Build pipelines"], a: 1, exp: "Training data quality drives model bias, hallucination, and exposure to data poisoning attacks — central to AI governance per NIST AI RMF." },
+  { id: 17, domain: "GRC", q: "Which legal concept may protect attorney-client communications during incident response?", choices: ["Hearsay rule", "Attorney-client privilege via legal counsel engagement", "Best evidence rule", "Exigent circumstances"], a: 1, exp: "When IR is performed at the direction of counsel, work product may be protected from discovery — a key reason to involve legal early." },
+  { id: 18, domain: "GRC", q: "Which type of data should typically receive the strictest handling under data classification?", choices: ["Public marketing", "Internal-only", "PII / PHI / regulated", "De-identified analytics"], a: 2, exp: "PII, PHI, and other regulated categories drive specific encryption, access, retention, and breach-notification requirements." },
+  { id: 19, domain: "GRC", q: "An organization wants to demonstrate due diligence after an incident. Which artifact best supports this?", choices: ["Marketing materials", "Documented risk assessments, control implementation, and remediation actions", "Vendor brochures", "Public press release"], a: 1, exp: "Due diligence is shown through documented, repeatable risk management — assessments, decisions, controls, and timely remediation." },
+  { id: 20, domain: "GRC", q: "Which is a key element of a vendor offboarding security checklist?", choices: ["Issuing a corporate badge", "Revoking access, recovering assets, terminating API keys/SSO", "Buying new hardware", "Increasing logging"], a: 1, exp: "Offboarding must promptly remove all access — SSO, federation, API tokens, VPN, physical — to prevent lingering risk." },
+  { id: 21, domain: "GRC", q: "Which framework focuses specifically on AI risks across govern, map, measure, and manage functions?", choices: ["NIST AI RMF", "PCI-DSS", "FedRAMP", "ISO 9001"], a: 0, exp: "NIST AI RMF (AI 100-1) structures AI risk management into Govern, Map, Measure, Manage, addressing reliability, safety, fairness, and privacy." },
+  { id: 22, domain: "GRC", q: "What is the BEST description of a security control baseline?", choices: ["Random control selection", "Pre-defined minimum set of controls applied to systems of a given category", "Audit checklist only", "Vendor contract"], a: 1, exp: "Baselines (e.g., NIST 800-53 LOW/MOD/HIGH, CIS Benchmarks) define minimum controls tailored to system impact level." },
+  { id: 23, domain: "GRC", q: "Which is the FIRST step in NIST RMF?", choices: ["Authorize", "Categorize the system based on impact", "Monitor", "Implement controls"], a: 1, exp: "RMF starts with Categorize (per FIPS 199), which drives subsequent control selection and tailoring." },
+  { id: 24, domain: "GRC", q: "A regulatory examination requires evidence that user access reviews are performed quarterly. Which artifact is most useful?", choices: ["Firewall rules", "Signed access review attestations with timestamps", "VPN logs only", "Slide deck"], a: 1, exp: "Quarterly user access certification logs with reviewer attestation provide auditable proof of control operation." },
+  { id: 25, domain: "GRC", q: "Which contract clause defines a vendor's obligation to notify on a security incident?", choices: ["IP assignment", "Breach notification SLA", "Force majeure", "Indemnification only"], a: 1, exp: "Breach notification clauses define timing (often 24–72 hours), method, and content of notification obligations." },
+  { id: 26, domain: "GRC", q: "Which is a key indicator of a successful security awareness program?", choices: ["Reduced training cost", "Reduced phishing click rates and increased reporting", "Increased simulated attacks", "Removed MFA requirements"], a: 1, exp: "Effective awareness shows up as lower click-through rates AND higher report rates over time — both matter." },
+  { id: 27, domain: "GRC", q: "Which type of audit is performed by an organization's own staff?", choices: ["External", "Internal / first-party", "Third-party certification", "Regulatory examination"], a: 1, exp: "First-party (internal) audits self-assess against standards/policies. Third-party audits (e.g., certifications) require independence." },
+  { id: 28, domain: "GRC", q: "Which is a primary goal of zero trust architecture from a governance perspective?", choices: ["Eliminate logging", "Verify explicitly, least privilege, assume breach", "Replace firewalls only", "Disable MFA"], a: 1, exp: "ZT principles (per NIST SP 800-207) drive continuous verification, dynamic policy, and microsegmentation — broad governance/architecture implications." },
+  { id: 29, domain: "GRC", q: "Which is a key reason to retain logs for at least one year for PCI-DSS environments?", choices: ["Improve performance", "Compliance retention requirement for cardholder environments", "Reduce storage", "Disable backups"], a: 1, exp: "PCI-DSS requires at least 12 months of audit history, with the most recent 3 months immediately available." },
+  { id: 30, domain: "GRC", q: "Which is the BEST description of due care vs. due diligence?", choices: ["They are identical", "Due care = doing what reasonable person would; due diligence = ongoing investigation/management", "Due care relates only to backups", "Due diligence is contracts"], a: 1, exp: "Due care is the ongoing application of reasonable controls. Due diligence is the active research and verification of risks and controls." },
+  { id: 31, domain: "GRC", q: "Which framework provides controls categorized into 18 control families used heavily in federal systems?", choices: ["NIST SP 800-53", "ITIL", "ISO 9001", "TOGAF"], a: 0, exp: "NIST SP 800-53 catalog organizes hundreds of controls into families (AC, AU, CM, IR, RA, SC, etc.) at LOW/MOD/HIGH baselines." },
+  { id: 32, domain: "GRC", q: "Which is a primary driver for FedRAMP authorization for a cloud service?", choices: ["State tax compliance", "Selling to US federal agencies", "ISO 14001 certification", "PCI compliance"], a: 1, exp: "FedRAMP standardizes security assessment, authorization, and continuous monitoring for cloud services used by US federal agencies." },
+  { id: 33, domain: "GRC", q: "Which is a security implication of shadow IT?", choices: ["No impact", "Unmanaged data flows, weak controls, compliance gaps", "Reduced cost only", "Improved security"], a: 1, exp: "Shadow IT bypasses governance — creating unknown data flows, weak access controls, and compliance/audit blind spots." },
+  { id: 34, domain: "GRC", q: "Which is the BEST description of a SOC for Cybersecurity report?", choices: ["Internal-only HR review", "AICPA-defined examination of an organization's cyber risk management program", "Cloud audit", "Network device inventory"], a: 1, exp: "SOC for Cybersecurity is an AICPA attestation reporting on the design and effectiveness of an entity's cyber risk management program for stakeholders." },
+  { id: 35, domain: "GRC", q: "Which is the role of the system owner in NIST RMF?", choices: ["Configure routers", "Accountable for overall system risk, including selecting and maintaining controls", "Patch endpoints", "Perform pen tests only"], a: 1, exp: "The system owner is accountable for risk management decisions, control implementation, and ongoing security posture of their system." },
+  { id: 36, domain: "GRC", q: "Which is the PRIMARY value of tabletop exercises in IR readiness?", choices: ["Buying tools", "Stress-testing playbooks, roles, and decision-making without operational disruption", "Replacing detection tools", "Generating press releases"], a: 1, exp: "Tabletops surface gaps in playbooks, communication, and decision authority before a real incident — cheap insurance." },
+
+  // ============ SECURITY ARCHITECTURE (50) ============
+  { id: 37, domain: "ARC", q: "Which is the FOUNDATIONAL principle of Zero Trust Architecture (NIST SP 800-207)?", choices: ["Trust internal networks by default", "Never trust, always verify; verify per-request", "VPN replaces all controls", "Firewalls are unnecessary"], a: 1, exp: "ZTA shifts from network-perimeter trust to per-request verification using identity, device posture, and context — independent of network location." },
+  { id: 38, domain: "ARC", q: "Which architecture model integrates SD-WAN, SWG, CASB, ZTNA, and FWaaS in a cloud-delivered service?", choices: ["DMZ", "SASE (Secure Access Service Edge)", "VPN concentrator", "Air gap"], a: 1, exp: "SASE (Gartner) converges WAN edge networking and security as a cloud service — SD-WAN + SWG + CASB + ZTNA + FWaaS. SSE is the security subset of SASE." },
+  { id: 39, domain: "ARC", q: "A CASB primarily provides which capability?", choices: ["Datacenter cooling", "Visibility, compliance, and threat protection for cloud service usage", "Patch management", "Hardware refresh"], a: 1, exp: "Cloud Access Security Broker enforces policies between users and cloud services — 4 pillars: visibility, compliance, data security, threat protection." },
+  { id: 40, domain: "ARC", q: "Which is the BEST description of micro-segmentation?", choices: ["VLAN per office", "Fine-grained workload-to-workload policy enforcement", "Single perimeter firewall", "Bridged subnets"], a: 1, exp: "Micro-segmentation enforces granular policy between workloads (often east-west) using identity, tags, or labels — a ZTA building block." },
+  { id: 41, domain: "ARC", q: "Which is a primary architectural difference between IaaS and PaaS?", choices: ["IaaS has no networking", "PaaS abstracts OS and runtime; IaaS provides VMs/storage/networking", "PaaS is on-prem only", "IaaS is serverless"], a: 1, exp: "IaaS = VMs, storage, networking (you manage OS+up). PaaS = managed runtime (you manage app+data). SaaS = full application." },
+  { id: 42, domain: "ARC", q: "Under the shared responsibility model for IaaS, who is responsible for OS patching?", choices: ["Cloud provider only", "Customer", "Both equally", "End user, never customer"], a: 1, exp: "In IaaS, the customer manages OS, middleware, applications, and data. The provider secures the underlying infrastructure." },
+  { id: 43, domain: "ARC", q: "Which architecture pattern allows applications to communicate with each other via well-defined APIs through a managed bus?", choices: ["Service mesh", "ESB / API gateway", "FTP", "Telnet"], a: 1, exp: "ESBs and API gateways provide central policy, security, and observability for API-driven communication. Service meshes are sidecar-based for microservices." },
+  { id: 44, domain: "ARC", q: "Which design pattern reduces blast radius if a single component is compromised?", choices: ["Monolithic design", "Compartmentalization / segmentation", "Open trust", "Flat network"], a: 1, exp: "Segmentation, microservices, separate accounts/projects, and least-privilege identities all limit blast radius from a compromise." },
+  { id: 45, domain: "ARC", q: "Which is a key benefit of Infrastructure as Code (IaC) from a security perspective?", choices: ["Slower deployments", "Auditable, versioned, repeatable security configurations", "Manual approvals only", "Removes encryption"], a: 1, exp: "IaC (Terraform, CloudFormation) enables code review, drift detection, scanning (e.g., Checkov, tfsec), and consistent baselines across environments." },
+  { id: 46, domain: "ARC", q: "Which Kubernetes object enforces network policies between pods?", choices: ["Deployment", "NetworkPolicy", "Service", "Ingress"], a: 1, exp: "NetworkPolicy resources (enforced by CNIs like Calico, Cilium) provide pod-to-pod and namespace-level segmentation." },
+  { id: 47, domain: "ARC", q: "Which is a primary risk of using container images from public registries without validation?", choices: ["Improved performance", "Supply chain compromise via malicious or vulnerable images", "Faster builds only", "Lower cost"], a: 1, exp: "Public images may carry CVEs or backdoors. Mitigate with signing (Cosign/Sigstore), scanning, allowlists, and curated private registries." },
+  { id: 48, domain: "ARC", q: "Which technique cryptographically signs and verifies container images?", choices: ["RBAC", "Image signing (e.g., Cosign / Notary)", "MTU adjustment", "MAC filtering"], a: 1, exp: "Sigstore/Cosign and Notary enable image signing and verification, integrated into admission controllers for supply-chain assurance." },
+  { id: 49, domain: "ARC", q: "Which is the role of a Web Application Firewall (WAF)?", choices: ["Replace SIEM", "Inspect HTTP(S) traffic and block application-layer attacks (e.g., SQLi, XSS)", "Sniff Ethernet frames", "Manage DNS"], a: 1, exp: "WAFs apply OWASP-aligned rules to HTTP(S) — defending against injection, XSS, file inclusion, and bot abuse." },
+  { id: 50, domain: "ARC", q: "Which architecture component enables centralized identity for federated SaaS applications?", choices: ["DNS", "Identity Provider (IdP) with SAML/OIDC", "FTP server", "VLAN"], a: 1, exp: "IdPs (Okta, Entra ID, Ping) provide SSO via SAML 2.0 or OIDC — enforcing MFA, conditional access, and lifecycle once for all SPs." },
+  { id: 51, domain: "ARC", q: "Which protocol enables an application to receive identity claims from an IdP using JWT-based tokens?", choices: ["SAML", "OAuth 2.0 + OIDC", "Kerberos", "LDAP"], a: 1, exp: "OpenID Connect builds on OAuth 2.0 to add identity (ID tokens as JWTs). SAML is XML-based; both are common in modern federation." },
+  { id: 52, domain: "ARC", q: "Which is a primary use of OAuth 2.0 (vs OIDC)?", choices: ["Identity", "Delegated authorization (granting access to resources)", "Encryption", "Routing"], a: 1, exp: "OAuth 2.0 is authorization (access delegation). OIDC sits on top to provide authentication via ID tokens." },
+  { id: 53, domain: "ARC", q: "Which architecture provides centralized secrets management for applications?", choices: ["Public S3 bucket", "HashiCorp Vault / AWS Secrets Manager / Azure Key Vault", "DNS TXT records", "Filesystem only"], a: 1, exp: "Dedicated secrets managers provide encryption at rest, dynamic credentials, leases, auditing, and access control via identity." },
+  { id: 54, domain: "ARC", q: "Which encryption approach allows computation on ciphertext without decryption?", choices: ["AES-GCM", "Homomorphic encryption", "RSA-2048", "DES"], a: 1, exp: "Homomorphic encryption enables operations on encrypted data — promising for privacy-preserving analytics but computationally expensive." },
+  { id: 55, domain: "ARC", q: "Which key exchange algorithm provides forward secrecy in modern TLS?", choices: ["RSA key transport", "ECDHE / DHE (ephemeral Diffie-Hellman)", "MD5", "DES-EDE"], a: 1, exp: "ECDHE/DHE generate ephemeral keys per session, so past sessions remain confidential even if long-term keys are later compromised." },
+  { id: 56, domain: "ARC", q: "Which TLS version is the current recommended baseline?", choices: ["TLS 1.0", "TLS 1.1", "TLS 1.2 (minimum) / TLS 1.3 (preferred)", "SSL 3.0"], a: 2, exp: "TLS 1.0/1.1 and SSL are deprecated. TLS 1.2 is the minimum acceptable; TLS 1.3 is preferred — fewer round trips, mandatory PFS, stronger defaults." },
+  { id: 57, domain: "ARC", q: "Which is the most common method to enforce certificate validation against forged CAs in mobile apps?", choices: ["Trust any CA", "Certificate pinning", "Disable TLS", "Allowlist by IP"], a: 1, exp: "Pinning binds the app to specific certificate(s) or public key(s), preventing acceptance of forged certs from compromised or rogue CAs." },
+  { id: 58, domain: "ARC", q: "Which is a primary concern with quantum-resistant (post-quantum) cryptography migration?", choices: ["GPU shortage", "Hybrid deployments and harvest-now-decrypt-later risk on long-lived data", "Cooling capacity", "Email storage"], a: 1, exp: "Adversaries may capture today's encrypted traffic for later decryption. NIST PQC standards (e.g., ML-KEM, ML-DSA) are being adopted in hybrid mode." },
+  { id: 59, domain: "ARC", q: "Which architecture decision BEST supports defense-in-depth for a customer-facing web app?", choices: ["Single firewall only", "CDN + WAF + load balancer + app + DB with separate trust zones", "Direct internet to DB", "Plaintext HTTP everywhere"], a: 1, exp: "Layered defenses (edge, app, data) with segmentation, identity, and encryption provide depth — no single failure is catastrophic." },
+  { id: 60, domain: "ARC", q: "Which design choice mitigates SSRF (Server-Side Request Forgery) attacks against cloud metadata services?", choices: ["Open egress everywhere", "Enforce IMDSv2, restrict outbound egress, validate URLs", "Disable IAM roles", "Allow all DNS"], a: 1, exp: "IMDSv2 requires session tokens, blocking trivial SSRF. Combined with egress controls and input validation, it significantly reduces SSRF impact." },
+  { id: 61, domain: "ARC", q: "Which architectural construct enables temporary, just-in-time elevated access?", choices: ["Permanent admin accounts", "Privileged Access Management (PAM) with JIT/JEA", "Shared root passwords", "Static API keys"], a: 1, exp: "PAM (BeyondTrust, CyberArk, etc.) issues time-bound, scoped privileged access with session recording and approval workflows." },
+  { id: 62, domain: "ARC", q: "Which is a primary risk consideration when adopting serverless (FaaS) architectures?", choices: ["No cold starts", "Function permissions, event injection, and dependency vulnerabilities", "Higher TCO always", "Replaces firewalls"], a: 1, exp: "Serverless shifts perimeter to identity and event sources. Threats: over-permissive roles, event injection, vulnerable dependencies, secrets in env." },
+  { id: 63, domain: "ARC", q: "Which is the BEST architectural mitigation for prompt injection attacks against LLMs?", choices: ["Disable model", "Input/output filtering, separation of trusted/untrusted context, tool-use guardrails", "Larger model only", "Higher temperature"], a: 1, exp: "OWASP LLM Top 10 #1. Defenses: prompt boundaries, content filters, scoped tool use, least-privilege function calls, allowlisted actions." },
+  { id: 64, domain: "ARC", q: "Which is the role of a service mesh in a microservices architecture?", choices: ["Replace databases", "Provide mTLS, traffic policy, observability between services via sidecars", "Disk encryption", "DNS resolution only"], a: 1, exp: "Meshes (Istio, Linkerd) enable mTLS, retries, traffic shifting, and telemetry without modifying application code." },
+  { id: 65, domain: "ARC", q: "Which IPv6 transition mechanism could introduce unmonitored tunneled traffic?", choices: ["Manual config", "6to4 / Teredo / ISATAP automatic tunneling", "Static routing", "VLAN trunking"], a: 1, exp: "Automatic IPv6-in-IPv4 tunnels can bypass IPv4-only monitoring. Best practice: disable when not needed, monitor or terminate at known endpoints." },
+  { id: 66, domain: "ARC", q: "Which is the role of a DLP system in architecture?", choices: ["Route OSPF", "Detect/prevent exfiltration of sensitive data via content/context analysis across endpoint, network, and cloud", "Manage DNS", "Replace firewall"], a: 1, exp: "Data Loss Prevention inspects content (regex, fingerprints, classifiers) and context (user, app, destination) to enforce data handling policy." },
+  { id: 67, domain: "ARC", q: "Which approach BEST secures CI/CD pipelines against supply-chain attacks?", choices: ["No code review", "Signed commits, SCA/SBOM, build provenance (SLSA), artifact signing, hardened runners", "Public Jenkins on internet", "Disable MFA"], a: 1, exp: "SLSA framework, SBOMs, signed artifacts, ephemeral hardened runners, and short-lived credentials defend against pipeline compromise." },
+  { id: 68, domain: "ARC", q: "Which standard provides supply-chain integrity levels for build systems?", choices: ["OWASP ASVS", "SLSA (Supply-chain Levels for Software Artifacts)", "PCI-DSS", "FIPS 199"], a: 1, exp: "SLSA (Google-originated, now OpenSSF) defines four levels of build provenance and integrity for software supply chains." },
+  { id: 69, domain: "ARC", q: "Which architecture element provides centralized identity governance and lifecycle for users and entitlements?", choices: ["DHCP", "IGA (Identity Governance & Administration) platform", "DNS", "NTP"], a: 1, exp: "IGA tools (SailPoint, Saviynt) manage joiner/mover/leaver, access certifications, SoD policies, and entitlement analytics." },
+  { id: 70, domain: "ARC", q: "Which architecture pattern allows users to access apps without VPN, with policy applied at session level?", choices: ["IPsec only", "ZTNA (Zero Trust Network Access)", "MPLS", "L2 bridging"], a: 1, exp: "ZTNA replaces VPN with identity- and posture-driven per-app access. Often delivered via SASE/SSE platforms." },
+  { id: 71, domain: "ARC", q: "Which AWS service primarily provides centralized key management for envelope encryption?", choices: ["S3", "AWS KMS", "EC2", "Lambda"], a: 1, exp: "KMS manages customer master keys (CMKs/KMS keys), generates data keys for envelope encryption, and audits via CloudTrail." },
+  { id: 72, domain: "ARC", q: "Which is a primary concern with multi-tenant SaaS architecture?", choices: ["Tenant isolation failures leading to cross-tenant data exposure", "Local disk encryption only", "Browser fonts", "Cable types"], a: 0, exp: "Strong logical isolation (DB row-level security, separate schemas/instances, RBAC, encryption per tenant) is critical to prevent cross-tenant leakage." },
+  { id: 73, domain: "ARC", q: "Which is a primary value of an enterprise architecture (EA) framework like TOGAF in security?", choices: ["No relevance", "Align security capabilities to business architecture and lifecycle", "Replace firewalls", "Manage cooling"], a: 1, exp: "EA frameworks structure how business, data, application, and technology architectures align — security architecture overlays these for traceable risk decisions." },
+  { id: 74, domain: "ARC", q: "Which architecture element enforces consistent policy across hybrid (on-prem + cloud) workloads?", choices: ["Single point firewall", "Policy-as-Code (e.g., OPA, Cedar) with central enforcement", "Public DNS", "Spreadsheet of rules"], a: 1, exp: "Policy engines (OPA/Rego, Cedar) decouple policy from app code and enforce consistent rules across environments via APIs/admission controls." },
+  { id: 75, domain: "ARC", q: "Which is a primary use of an HSM (Hardware Security Module)?", choices: ["Web hosting", "FIPS-validated key generation, storage, and crypto operations resistant to extraction", "Spam filtering", "VLAN tagging"], a: 1, exp: "HSMs (Thales, Entrust, AWS CloudHSM) provide tamper-evident, FIPS 140-2/3 validated key custody for high-assurance use cases (CAs, PKI, payments)." },
+  { id: 76, domain: "ARC", q: "Which secure design principle says systems should default to denying access?", choices: ["Open by default", "Fail-safe defaults / deny by default", "Trust everyone", "Allow all egress"], a: 1, exp: "Saltzer & Schroeder principle: in absence of explicit allow, deny. Reduces the attack surface from misconfiguration." },
+  { id: 77, domain: "ARC", q: "Which is the architectural concept where a system continues degraded operation after partial failure?", choices: ["Single point of failure", "Graceful degradation / fault tolerance", "Hard failure", "Cold start only"], a: 1, exp: "Graceful degradation ensures core functions continue under stress; combined with HA/redundancy/circuit breakers it bounds incident impact." },
+  { id: 78, domain: "ARC", q: "Which approach reduces attack surface for IoT/OT devices in segmented networks?", choices: ["Direct internet exposure", "Network segmentation, allowlisted comms, secure-by-design firmware, asset inventory", "No patching", "Flat L2"], a: 1, exp: "OT/IoT requires inventory + segmentation + protocol-aware firewalls (e.g., Claroty/Nozomi) and rigorous change control." },
+  { id: 79, domain: "ARC", q: "Which architectural decision MOST reduces phishing-driven account takeover?", choices: ["SMS-only OTP", "Phishing-resistant MFA (FIDO2/WebAuthn, smartcards)", "Disable MFA on weekends", "Longer passwords only"], a: 1, exp: "FIDO2/WebAuthn binds credentials to origin and uses asymmetric cryptography — resistant to relay, phishing, and credential theft." },
+  { id: 80, domain: "ARC", q: "Which is the BEST description of a 'jump server' (bastion) in secure access architecture?", choices: ["Public file share", "Hardened intermediary used to access internal systems via controlled, audited sessions", "Email gateway", "DNS resolver"], a: 1, exp: "Bastion hosts centralize and audit administrative access — combine with PAM, MFA, session recording, and JIT for higher assurance." },
+  { id: 81, domain: "ARC", q: "Which is the role of an SBOM (Software Bill of Materials)?", choices: ["Inventory hardware racks", "Inventory components/dependencies in software for vulnerability and license management", "Hash backups", "Format USB drives"], a: 1, exp: "SBOMs (SPDX, CycloneDX) enable rapid identification of vulnerable components (e.g., Log4Shell) and license obligations." },
+  { id: 82, domain: "ARC", q: "Which is a primary concern when deploying public LLM APIs for enterprise data analysis?", choices: ["Latency only", "Data residency, leakage of sensitive inputs, model output reliability", "GPU clock speed", "Power draw"], a: 1, exp: "Data sent to public APIs may be retained, used for training, or cross-jurisdictional. Enterprise patterns: private endpoints, gateways, redaction, on-prem/local models." },
+  { id: 83, domain: "ARC", q: "Which is a primary architectural defense against credential stuffing?", choices: ["Disable lockout", "MFA, breach-credential checks, rate limiting, bot management", "Reduce password length", "Allow shared accounts"], a: 1, exp: "Layered controls: detect known-breached creds (HIBP/EnzoIC), enforce MFA, throttle automation, and apply CAPTCHA/bot management." },
+  { id: 84, domain: "ARC", q: "Which is the BEST description of immutable infrastructure?", choices: ["Servers patched in place forever", "Servers replaced rather than modified; changes via redeployment from images", "Single-tenant DB", "Disabled logging"], a: 1, exp: "Immutable patterns rebuild from versioned images (e.g., AMIs, container images) — eliminating drift, easing rollback, improving security." },
+  { id: 85, domain: "ARC", q: "Which architecture provides centralized policy enforcement for SaaS data access (e.g., DLP, sharing controls)?", choices: ["SWG only", "CASB (proxy or API)", "Local firewall", "DHCP"], a: 1, exp: "CASBs apply DLP, malware scanning, sharing limits, and behavior analytics to sanctioned and unsanctioned SaaS via API and inline modes." },
+  { id: 86, domain: "ARC", q: "Which is a primary security benefit of API gateway architecture?", choices: ["Removes auth", "Central authn/authz, rate limiting, schema validation, and observability for APIs", "Disables TLS", "Replaces databases"], a: 1, exp: "API gateways (Kong, Apigee, AWS API Gateway) centralize cross-cutting concerns — security, throttling, transformation, monitoring." },
+
+  // ============ SECURITY ENGINEERING (55) ============
+  { id: 87, domain: "ENG", q: "Which mode of AES provides authenticated encryption?", choices: ["ECB", "CBC", "GCM (or CCM)", "OFB"], a: 2, exp: "AES-GCM and AES-CCM provide authenticated encryption with associated data (AEAD), combining confidentiality and integrity in one operation." },
+  { id: 88, domain: "ENG", q: "Which is a key weakness of AES-ECB mode?", choices: ["Slow performance", "Identical plaintext blocks produce identical ciphertext blocks, leaking patterns", "Requires GPU", "Cannot encrypt"], a: 1, exp: "ECB lacks diffusion — the classic 'Tux penguin' image demonstrates that patterns survive encryption. Never use ECB for confidentiality." },
+  { id: 89, domain: "ENG", q: "Which password hashing algorithm is currently recommended for new systems?", choices: ["MD5", "SHA-1", "Argon2id (or bcrypt/scrypt as alternatives)", "DES"], a: 2, exp: "Argon2id is the OWASP-recommended modern KDF. Bcrypt and scrypt remain acceptable. Never use unsalted MD5/SHA-1 for passwords." },
+  { id: 90, domain: "ENG", q: "Which configuration is MOST important to mitigate Heartbleed-style memory disclosure?", choices: ["Faster CPU", "Patching OpenSSL to fixed versions", "Adding more RAM", "Disabling logging"], a: 1, exp: "Heartbleed (CVE-2014-0160) was an OpenSSL flaw. Lesson: rapid patching of cryptographic libraries; rotate keys/certs after exposure." },
+  { id: 91, domain: "ENG", q: "Which is a primary defense against pass-the-hash (PtH) attacks?", choices: ["Reuse passwords", "Credential Guard, LSA protections, tiered admin, disable NTLM where possible", "Disable MFA", "Shared admin accounts"], a: 1, exp: "Windows Credential Guard isolates LSA secrets. Combined with admin tiering, Kerberos, and removing reusable hashes — defeats PtH." },
+  { id: 92, domain: "ENG", q: "Which is the BEST practice for storing API keys in source code repositories?", choices: ["Commit them to repo", "Never commit; use secrets manager + env vars + pre-commit scanning", "Email them around", "Put them in README"], a: 1, exp: "Use secret managers (Vault, AWS SM), short-lived tokens, pre-commit hooks (gitleaks, trufflehog), and rotate exposed keys immediately." },
+  { id: 93, domain: "ENG", q: "Which control PRIMARILY mitigates a Kerberoasting attack?", choices: ["Allow weak SPN passwords", "Strong, long passwords for service accounts; gMSA where possible; monitor 4769 anomalies", "Disable Kerberos entirely", "Use NTLM only"], a: 1, exp: "Kerberoasting cracks service account TGS tickets offline. Defenses: long random passwords, Group Managed Service Accounts (gMSA), and detection on unusual 4769 events." },
+  { id: 94, domain: "ENG", q: "Which Windows feature enables application allowlisting?", choices: ["Defender Firewall", "AppLocker / Windows Defender Application Control (WDAC)", "Disk cleanup", "Task scheduler"], a: 1, exp: "WDAC (kernel-enforced) and AppLocker (user-mode) restrict execution to approved applications — strong defense against malware and LOLBins." },
+  { id: 95, domain: "ENG", q: "Which control mitigates DLL search-order hijacking?", choices: ["Allow any DLL load", "Use absolute paths, SafeDllSearchMode, code signing, ACLs on app dirs", "Disable AV", "Open all permissions"], a: 1, exp: "Apps should load DLLs from controlled, signed locations. SafeDllSearchMode is on by default in modern Windows; signing and ACLs harden further." },
+  { id: 96, domain: "ENG", q: "Which is a primary purpose of TLS interception (decryption) in enterprises?", choices: ["Slow down users", "Inspect encrypted traffic for malware and DLP via trusted internal CA", "Disable encryption", "Block all websites"], a: 1, exp: "Decryption middleboxes terminate TLS using an internal CA, inspect content, then re-encrypt to the server. Must be deployed carefully (pinning, privacy)." },
+  { id: 97, domain: "ENG", q: "Which DNS feature provides authentication of DNS responses via cryptographic signatures?", choices: ["DNSSEC", "DHCP", "NTP", "BGP"], a: 0, exp: "DNSSEC (RRSIG, DNSKEY, DS) authenticates DNS responses, preventing cache poisoning. Doesn't provide confidentiality — pair with DoH/DoT for that." },
+  { id: 98, domain: "ENG", q: "Which protocol encrypts DNS queries between client and resolver?", choices: ["DNSSEC", "DoH (DNS over HTTPS) / DoT (DNS over TLS)", "ICMP", "SMTP"], a: 1, exp: "DoH/DoT encrypt DNS in transit. DNSSEC authenticates responses but doesn't encrypt — they solve different problems and can be combined." },
+  { id: 99, domain: "ENG", q: "Which email security control authenticates the sending domain to prevent spoofing?", choices: ["IMAP", "SPF + DKIM + DMARC", "POP3", "Telnet"], a: 1, exp: "SPF validates sending IP; DKIM signs messages; DMARC aligns and instructs receivers how to handle failures. Deploy together with reject policy when ready." },
+  { id: 100, domain: "ENG", q: "Which DMARC policy provides the strongest enforcement?", choices: ["p=none", "p=quarantine", "p=reject", "p=monitor"], a: 2, exp: "p=reject tells receivers to reject failing messages. Move from p=none → quarantine → reject as confidence grows from monitoring reports." },
+  { id: 101, domain: "ENG", q: "Which is a primary technical control for protecting backups against ransomware?", choices: ["Same network as production", "Immutable / air-gapped / offline backups + integrity verification + restore testing", "Backups on user laptops", "Single copy"], a: 1, exp: "3-2-1-1-0: three copies, two media, one offsite, one immutable/offline, zero verified errors. Test restores regularly." },
+  { id: 102, domain: "ENG", q: "Which Active Directory protection feature blocks specific privileged group changes without explicit allow?", choices: ["Authentication Policy Silos / Protected Users + Tiered Admin model", "Disable AD", "Anonymous binds", "Single admin account"], a: 0, exp: "Protected Users group, Authentication Policy Silos, tiered admin model, and PAW (Privileged Access Workstations) harden AD against credential theft." },
+  { id: 103, domain: "ENG", q: "Which mobile device management (MDM) capability is critical for BYOD?", choices: ["Hide settings", "Containerization separating corporate and personal data; selective wipe", "Disable updates", "Block VPN"], a: 1, exp: "BYOD requires data separation (containers like Intune MAM, Android Work Profile) and selective wipe of corporate data without affecting personal data." },
+  { id: 104, domain: "ENG", q: "Which CIS Control is foundational and addresses inventory of enterprise assets?", choices: ["CIS Control 1", "CIS Control 18", "CIS Control 12", "CIS Control 7"], a: 0, exp: "CIS Control 1 (Inventory of Enterprise Assets) is foundational — you can't secure what you don't know exists." },
+  { id: 105, domain: "ENG", q: "Which technique BEST detects exfiltration via DNS tunneling?", choices: ["Disable DNS", "Statistical analysis of query length, type distribution, and entropy to single domains", "Block AD", "Disable DHCP"], a: 1, exp: "DNS tunneling shows up as anomalous query patterns (long subdomains, TXT/NULL types, high volume to one domain). UEBA and dedicated DNS analytics detect it." },
+  { id: 106, domain: "ENG", q: "Which is a primary purpose of EDR vs traditional antivirus?", choices: ["File hashing only", "Continuous endpoint telemetry, behavioral detection, threat hunting, and response actions", "Slow down systems", "Replace firewall"], a: 1, exp: "EDR records detailed endpoint activity for behavioral detection, hunting, and remote response (isolate, kill, contain). Modern XDR extends across vectors." },
+  { id: 107, domain: "ENG", q: "Which is a primary risk with permissive IAM policies in cloud (e.g., wildcard actions)?", choices: ["Improved security", "Privilege escalation paths and lateral movement", "Faster builds", "Better logging"], a: 1, exp: "Wildcards in IAM (e.g., `Action: *`) create paths attackers exploit — chained role assumption, escalation. Use least privilege and tools like AccessAnalyzer." },
+  { id: 108, domain: "ENG", q: "Which approach BEST hardens an AWS account against credential exposure?", choices: ["Long-lived access keys in code", "Use IAM roles + STS short-lived credentials + IMDSv2 + GuardDuty", "Share root account", "Disable CloudTrail"], a: 1, exp: "Eliminate static keys where possible. Use IAM roles, federation, short-lived STS tokens, secrets manager, and continuous monitoring." },
+  { id: 109, domain: "ENG", q: "Which encryption at rest approach uses a Customer-Managed Key (CMK)?", choices: ["No keys", "Customer controls KMS key used by cloud service to encrypt data", "Plaintext storage", "Random per-file passwords"], a: 1, exp: "CMK gives customers control over key creation, rotation, policy, and audit. Useful for compliance and BYOK scenarios." },
+  { id: 110, domain: "ENG", q: "Which is the primary defense against SSRF when applications make outbound HTTP requests?", choices: ["Trust all URLs", "URL allowlists, block link-local/metadata endpoints, egress controls, validated parsers", "Bypass DNS", "Disable TLS"], a: 1, exp: "Strict allowlisting, blocking 169.254.169.254 and link-local, validating URLs server-side, and tight egress prevent SSRF." },
+  { id: 111, domain: "ENG", q: "Which is the BEST mitigation for IDOR (Insecure Direct Object Reference) vulnerabilities?", choices: ["Obfuscate IDs only", "Server-side authorization checks for every object access using the requester's identity", "Hide UI buttons", "Disable logging"], a: 1, exp: "IDOR is fixed by enforcing authorization on the server for every object access — never trust client-supplied identifiers without verification." },
+  { id: 112, domain: "ENG", q: "Which is a primary mitigation for race-condition vulnerabilities?", choices: ["Higher CPU clock", "Atomic operations, locks, idempotency keys, transaction isolation", "Disable threads", "Open files O_RDONLY"], a: 1, exp: "Race conditions require concurrency-safe design: atomic DB operations, optimistic concurrency, idempotency tokens, proper locking." },
+  { id: 113, domain: "ENG", q: "Which is the BEST defense against deserialization vulnerabilities?", choices: ["Trust all input", "Avoid native deserialization of untrusted data; use safe formats (JSON) and validate strictly", "Use binary formats only", "Disable type checking"], a: 1, exp: "Native deserialization (Java, .NET, Python pickle) on untrusted input enables RCE. Prefer JSON/structured formats with strict schemas." },
+  { id: 114, domain: "ENG", q: "Which is the role of CSP (Content Security Policy)?", choices: ["Network ACL", "Browser-enforced policy restricting which scripts/resources may load — mitigates XSS", "Encrypt DNS", "Backup tool"], a: 1, exp: "CSP headers (script-src, style-src, etc.) instruct browsers to restrict resource loading — a strong defense-in-depth against XSS." },
+  { id: 115, domain: "ENG", q: "Which is a primary mitigation for SQL injection?", choices: ["String concatenation", "Parameterized queries / prepared statements + input validation + least-privilege DB accounts", "Stored procedures only", "Disable logging"], a: 1, exp: "Parameterized queries separate code from data — the gold standard. Pair with input validation and least-privilege DB users." },
+  { id: 116, domain: "ENG", q: "Which is the BEST defense for storing OAuth refresh tokens client-side in a SPA?", choices: ["LocalStorage in plaintext", "HttpOnly secure cookies + short-lived access tokens via PKCE; avoid storing refresh tokens in JS-accessible storage", "Visible URL", "Hard-coded in JS"], a: 1, exp: "SPAs should use OAuth 2.0 Authorization Code with PKCE, short-lived access tokens, and refresh tokens (when used) stored in HttpOnly cookies." },
+  { id: 117, domain: "ENG", q: "Which Linux capability provides fine-grained privileges without full root?", choices: ["UID 0", "Linux capabilities (e.g., CAP_NET_BIND_SERVICE)", "chmod 777", "Disable SELinux"], a: 1, exp: "Capabilities split root privileges into granular flags (NET_BIND, NET_ADMIN, SYS_ADMIN). Grant minimum needed to processes/containers." },
+  { id: 118, domain: "ENG", q: "Which Linux MAC framework labels processes and files for policy enforcement?", choices: ["AppArmor or SELinux", "iptables", "fail2ban", "tcpwrappers"], a: 0, exp: "SELinux (label-based) and AppArmor (path-based) are MAC frameworks enforcing tighter-than-DAC policies on processes and resources." },
+  { id: 119, domain: "ENG", q: "Which container security control limits the capabilities/syscalls a container can use?", choices: ["root by default", "seccomp, AppArmor/SELinux profiles, capability drops, read-only root FS, non-root user", "Privileged mode", "--cap-add ALL"], a: 1, exp: "Runtime hardening — drop capabilities, apply seccomp/AppArmor, run non-root, read-only filesystem — minimizes container escape impact." },
+  { id: 120, domain: "ENG", q: "Which Kubernetes admission control approach enforces policy at deployment time?", choices: ["No checks", "Validating/Mutating Admission Webhooks (e.g., OPA Gatekeeper, Kyverno)", "kubectl trust", "RBAC alone"], a: 1, exp: "Admission controllers (Gatekeeper, Kyverno) evaluate policy-as-code at deploy — enforcing image sources, security contexts, labels, etc." },
+  { id: 121, domain: "ENG", q: "Which is a primary purpose of network detection and response (NDR)?", choices: ["Block DHCP", "Analyze network telemetry (flow + packet + protocol decode) using ML/heuristics to detect threats", "Issue certificates", "Power management"], a: 1, exp: "NDR (e.g., Vectra, Darktrace) consumes flows/PCAP/metadata to detect lateral movement, C2, and anomalies — complements EDR and SIEM." },
+  { id: 122, domain: "ENG", q: "Which is the BEST mitigation for Golden Ticket attacks in AD?", choices: ["Ignore them", "Rotate krbtgt password twice in sequence; minimize Tier-0 exposure; detect anomalous TGT lifetimes", "Disable Kerberos", "Use NTLM only"], a: 1, exp: "Golden Tickets are forged TGTs signed with krbtgt hash. Rotating krbtgt twice (with delay) invalidates them. Tier-0 hygiene prevents the theft." },
+  { id: 123, domain: "ENG", q: "Which Wi-Fi security standard provides the strongest enterprise authentication today?", choices: ["WEP", "WPA2-Personal", "WPA3-Enterprise (192-bit mode where applicable) with EAP-TLS", "Open"], a: 2, exp: "WPA3-Enterprise with EAP-TLS (cert-based) provides the strongest enterprise Wi-Fi. SAE replaces PSK for personal mode." },
+  { id: 124, domain: "ENG", q: "Which technology authenticates devices joining a wired/wireless network port-by-port?", choices: ["DHCP", "802.1X with RADIUS", "ARP", "CDP"], a: 1, exp: "802.1X (EAP types like EAP-TLS) authenticates endpoints at the port. Combined with NAC, posture checks influence access placement." },
+  { id: 125, domain: "ENG", q: "Which firewall feature inspects application-layer content (e.g., distinguishing Salesforce from generic HTTPS)?", choices: ["Stateful inspection only", "Next-Gen Firewall application identification (App-ID/AVC)", "ARP cache", "Static routes"], a: 1, exp: "NGFWs identify applications via signatures, behaviors, and decryption (App-ID/AVC), enabling granular policies independent of port." },
+  { id: 126, domain: "ENG", q: "Which technology provides isolated browsing of risky URLs in a remote environment?", choices: ["Local browser", "Remote Browser Isolation (RBI)", "FTP", "Telnet"], a: 1, exp: "RBI renders web content in an isolated environment (cloud or container), streaming a safe representation — defends against drive-by, browser exploits." },
+  { id: 127, domain: "ENG", q: "Which is a primary mitigation for ARP spoofing on enterprise switches?", choices: ["No protection possible", "Dynamic ARP Inspection + DHCP Snooping + Port Security", "Bridging VLANs", "Disable STP"], a: 1, exp: "DHCP Snooping builds a trusted binding table; DAI validates ARP against it. Port security restricts MAC addresses per port." },
+  { id: 128, domain: "ENG", q: "Which CASB deployment mode provides retroactive policy evaluation on existing SaaS data?", choices: ["Inline proxy", "API-based mode", "Tap mode", "Forward proxy only"], a: 1, exp: "API mode connects to SaaS APIs (M365, Salesforce, Google) to scan existing content, sharing, configs — even data created outside the inline path." },
+  { id: 129, domain: "ENG", q: "Which mitigates Cross-Origin Resource Sharing (CORS) misconfigurations?", choices: ["Allow * with credentials", "Restrict Access-Control-Allow-Origin to specific trusted origins; never use * with credentials", "Disable CORS entirely", "Trust referer"], a: 1, exp: "Wildcard origin with credentials is an explicit spec violation. Use allowlists, validate Origin server-side, and never echo arbitrary origins." },
+  { id: 130, domain: "ENG", q: "Which is the BEST way to harden secrets in container builds?", choices: ["Bake into image", "Use build-time secrets via BuildKit / external secret managers at runtime; never commit to images", "Plain env vars in Dockerfile", "Print to logs"], a: 1, exp: "Secrets baked into images persist in registry. Use BuildKit --mount=type=secret for build, and inject at runtime via mounted secrets/env from a manager." },
+  { id: 131, domain: "ENG", q: "Which is a primary use of TPM (Trusted Platform Module) on endpoints?", choices: ["Display graphics", "Hardware-rooted measured boot, key storage, attestation", "Print spooling", "Wi-Fi only"], a: 1, exp: "TPMs root keys in hardware, support measured boot (BitLocker, Credential Guard, device health attestation), and resist key extraction." },
+  { id: 132, domain: "ENG", q: "Which is the role of UEFI Secure Boot?", choices: ["Speed up POST", "Verify signed bootloaders before execution — defending against bootkits", "Enable PXE", "Mount drives"], a: 1, exp: "Secure Boot validates the chain of bootloaders/kernels against trusted certificates, preventing pre-OS persistence." },
+  { id: 133, domain: "ENG", q: "Which is the BEST defense for a fileless attack using PowerShell?", choices: ["Disable AV", "Constrained Language Mode, AMSI integration, Script Block Logging, ASR rules, ExecutionPolicy AllSigned", "Allow all scripts", "Remove patches"], a: 1, exp: "Defense-in-depth: CLM limits language features, AMSI feeds scanners, Script Block Logging captures decoded content, ASR rules block macro/script abuse." },
+  { id: 134, domain: "ENG", q: "Which is the BEST way to verify integrity of a downloaded ISO?", choices: ["Open it", "Verify SHA-256 (or stronger) hash and GPG signature published over independent secure channel", "Just check size", "Trust the URL"], a: 1, exp: "Hash + signature from a separate trust path defeats MitM/mirror tampering. Many distributions sign hash files with project GPG keys." },
+  { id: 135, domain: "ENG", q: "Which is the primary purpose of a Secure Web Gateway (SWG)?", choices: ["Email filtering", "Inspect and filter outbound web traffic — URL, malware, DLP, decryption", "BGP routing", "DNS resolution only"], a: 1, exp: "SWGs (Zscaler, Netskope, Cisco Umbrella SIG) sit between users and the internet — applying URL filtering, malware scanning, DLP, and TLS decryption." },
+  { id: 136, domain: "ENG", q: "Which technique mitigates time-based side-channel attacks against secret comparisons?", choices: ["strcmp", "Constant-time comparison functions (e.g., crypto.timingSafeEqual)", "Cache aggressively", "Branch early"], a: 1, exp: "Naive == on secrets leaks length and matched prefix. Constant-time compare ensures execution time doesn't reveal information." },
+  { id: 137, domain: "ENG", q: "Which is the BEST control to prevent unauthorized USB devices on endpoints?", choices: ["Trust all USB", "Device control via EPP/EDR with allowlists; disable autorun; BitLocker To Go", "Glue ports shut only", "Disable USB at BIOS only"], a: 1, exp: "Software device control (allow specific VIDs/PIDs, classes), combined with policy and encryption requirements, manages risk while preserving usability." },
+  { id: 138, domain: "ENG", q: "Which is the BEST defense for OWASP API Top 10 #1 (Broken Object Level Authorization)?", choices: ["Trust client IDs", "Server-side authorization with ownership checks per request and explicit object scope", "Hide IDs in URL only", "Disable logging"], a: 1, exp: "BOLA = IDOR for APIs. Enforce authorization for every object operation using the authenticated identity — never trust client-supplied IDs alone." },
+  { id: 139, domain: "ENG", q: "Which is the BEST detection control for a Pass-the-Ticket attack?", choices: ["Ignore Kerberos events", "Monitor for anomalous TGT/TGS lifetimes, encryption types (e.g., RC4), and impossible reuse across hosts", "Disable Active Directory", "Use LM hashes"], a: 1, exp: "Defenders correlate Kerberos events (4768, 4769, 4770) and look for RC4 downgrade, abnormal lifetimes, and ticket reuse across endpoints." },
+  { id: 140, domain: "ENG", q: "Which is the BEST approach for protecting RDP/SSH access to servers?", choices: ["Open to internet on standard ports", "Bastion / jump host + MFA + IP allowlist + session recording + JIT access", "Shared admin accounts", "Disable logging"], a: 1, exp: "Eliminate direct internet exposure. Front access with bastions / ZTNA / PAM, enforce MFA, restrict sources, record sessions, time-box access." },
+  { id: 141, domain: "ENG", q: "Which approach BEST mitigates LDAP injection?", choices: ["Trust user input", "Escape LDAP special characters, use parameterized libraries, validate against allowlists", "Use LDAPv2", "Use anonymous bind"], a: 1, exp: "LDAP injection arises from concatenated filters. Use library APIs that parameterize input and escape per RFC 4515." },
+
+  // ============ SECURITY OPERATIONS (39) ============
+  { id: 142, domain: "OPS", q: "Which is the FIRST phase of NIST SP 800-61 incident response lifecycle?", choices: ["Detection", "Preparation", "Containment", "Eradication"], a: 1, exp: "NIST 800-61: Preparation → Detection & Analysis → Containment, Eradication & Recovery → Post-Incident Activity." },
+  { id: 143, domain: "OPS", q: "An analyst confirms an active incident. Which is the immediate priority?", choices: ["Press release", "Containment to limit further damage while preserving evidence", "Reformat all systems", "Wait for legal"], a: 1, exp: "Short-term containment isolates affected systems while preserving evidence. Long-term containment and eradication follow." },
+  { id: 144, domain: "OPS", q: "Which is a primary tool for SOC playbook automation?", choices: ["DNS server", "SOAR platform", "FTP", "DHCP"], a: 1, exp: "SOAR (e.g., Cortex XSOAR, Splunk SOAR) executes playbooks across tools — enrichment, containment, ticketing — reducing MTTD/MTTR." },
+  { id: 145, domain: "OPS", q: "Which is the BEST description of MITRE ATT&CK's primary value to a SOC?", choices: ["Vendor product list", "TTP knowledge base used for detection mapping, threat-informed defense, and purple-team exercises", "Compliance checklist", "Network diagram tool"], a: 1, exp: "ATT&CK provides a structured taxonomy of adversary techniques — defenders map detections, identify gaps, and prioritize controls." },
+  { id: 146, domain: "OPS", q: "Which metric measures average time from detection to remediation?", choices: ["MTBF", "MTTR (Mean Time to Respond/Resolve)", "MTTF", "MTTD"], a: 1, exp: "MTTR drives operational improvement. MTTD (Detect) measures alerting speed. Both are core SOC KPIs." },
+  { id: 147, domain: "OPS", q: "Which is the BEST description of threat hunting?", choices: ["Wait for alerts", "Hypothesis-driven, proactive search for adversaries who evade existing detections", "Forensic imaging only", "Compliance reporting"], a: 1, exp: "Hunting starts from hypotheses (TTPs, threat intel, anomalies), uses data + tools, and produces new detections or confirmed incidents." },
+  { id: 148, domain: "OPS", q: "Which is the BEST initial action when isolating an infected host while preserving evidence?", choices: ["Power off immediately", "Network-isolate (VLAN/EDR isolate) while leaving running; capture memory and key artifacts", "Reimage instantly", "Delete suspicious files"], a: 1, exp: "Powering off destroys volatile evidence. Network isolation cuts attacker access while live forensic capture proceeds." },
+  { id: 149, domain: "OPS", q: "Which type of evidence is most volatile and should be collected first?", choices: ["Backups", "RAM contents", "Printed logs", "Optical media"], a: 1, exp: "RFC 3227 order of volatility: registers/cache → RAM → network state → running processes → disk → remote logs → physical media." },
+  { id: 150, domain: "OPS", q: "Which is the primary purpose of chain-of-custody documentation?", choices: ["Marketing", "Demonstrate evidence integrity and handling for admissibility", "Reduce storage", "Speed up tickets"], a: 1, exp: "Chain of custody documents who, what, when, where, and how — essential for legal admissibility and credibility of evidence." },
+  { id: 151, domain: "OPS", q: "Which is the BEST description of an IOA vs IOC?", choices: ["Identical concepts", "IOC = artifact of compromise; IOA = adversary behavior/intent indicating an attack in progress", "IOC is internal only", "IOA is hash-based only"], a: 1, exp: "IOCs (atomic: hashes, IPs, domains) are easily changed. IOAs (behaviors/TTPs) are durable and target what attackers actually do." },
+  { id: 152, domain: "OPS", q: "Which is the BEST source for current adversary TTPs and campaign intelligence?", choices: ["Random forums", "Reputable threat intel feeds + ISAC sharing + vendor research + MITRE ATT&CK", "Stack Overflow", "Public social media only"], a: 1, exp: "Operational TI comes from licensed feeds, ISAC/ISAO sharing, vendor research (Mandiant, CrowdStrike, Microsoft), and ATT&CK updates." },
+  { id: 153, domain: "OPS", q: "Which is a primary purpose of UEBA in modern SOCs?", choices: ["Replace firewalls", "Build behavior baselines for users/entities and flag anomalous deviations", "Manage VLANs", "Issue certs"], a: 1, exp: "UEBA detects insider threats, compromised accounts, and lateral movement by deviation from baseline — works well on identity and host telemetry." },
+  { id: 154, domain: "OPS", q: "Which is the BEST mitigation for alert fatigue in a SOC?", choices: ["Disable alerts", "Tune signatures, deduplicate, enrich, prioritize by asset value, and automate L1 with SOAR", "Hire more without process", "Ignore lows forever"], a: 1, exp: "Alert fatigue is process + engineering. Tune false positives, group by entity, enrich with context, and automate enrichment/triage." },
+  { id: 155, domain: "OPS", q: "Which artifact provides the most reliable evidence of a specific HTTP exfiltration?", choices: ["Flow record only", "Full packet capture for the flow", "Firewall hit count", "ARP table"], a: 1, exp: "PCAP captures the full payload, enabling exact validation of exfiltrated content. Flow gives metadata; PCAP gives ground truth." },
+  { id: 156, domain: "OPS", q: "Which is the primary purpose of a runbook in SOC operations?", choices: ["Marketing", "Step-by-step procedure for handling a specific alert/incident type consistently", "Sales script", "Hardware inventory"], a: 1, exp: "Runbooks/playbooks ensure consistent, repeatable response — especially valuable for time-sensitive or high-impact events." },
+  { id: 157, domain: "OPS", q: "Which Sysmon event ID logs process creation with hashes and command lines?", choices: ["Event ID 1", "Event ID 3", "Event ID 7", "Event ID 22"], a: 0, exp: "Sysmon Event ID 1 = process creation with hashes, parent process, command line — gold for endpoint detection." },
+  { id: 158, domain: "OPS", q: "Which Sysmon event ID logs network connections from processes?", choices: ["1", "3", "11", "13"], a: 1, exp: "Sysmon Event ID 3 = network connection, including PID, image, src/dst IP/port — links processes to network activity." },
+  { id: 159, domain: "OPS", q: "Which is the BEST detection approach for Living-off-the-Land (LOLBin) abuse?", choices: ["Block all built-ins (breaks systems)", "Behavioral detection on parent-child relationships, command-line patterns, and contextual anomalies", "Disable PowerShell entirely", "Antivirus signatures alone"], a: 1, exp: "LOLBin defense relies on behavior: rundll32 spawning powershell encoded base64 — context, not file reputation." },
+  { id: 160, domain: "OPS", q: "Which is a primary purpose of deception technology (honeypots/honeytokens)?", choices: ["Replace IDS", "High-fidelity detection by alerting on access to decoys that legitimate users shouldn't touch", "Slow attackers only", "Marketing"], a: 1, exp: "Deception generates near-zero-false-positive alerts: a honeyaccount login, honey file read, or DB row access is by definition unauthorized." },
+  { id: 161, domain: "OPS", q: "Which is the BEST KPI for measuring SOC detection coverage?", choices: ["Number of alerts", "ATT&CK technique coverage and tested detections per technique", "Lines of code", "Tickets closed without context"], a: 1, exp: "Coverage maps detections to ATT&CK techniques (and validates via purple-team / atomic-red-team tests). Quality > quantity." },
+  { id: 162, domain: "OPS", q: "Which is the BEST approach for vulnerability prioritization beyond CVSS?", choices: ["Patch random order", "Combine CVSS with exploitability (EPSS / KEV), asset criticality, and reachability", "Patch only highest CVSS", "Wait for incidents"], a: 1, exp: "Exploit Prediction Scoring System (EPSS) + CISA KEV + business context drive risk-based VM — more effective than CVSS-only." },
+  { id: 163, domain: "OPS", q: "Which is the BEST description of purple teaming?", choices: ["Red team only", "Collaborative exercises where red emulates TTPs and blue refines detections/response in real time", "Compliance audit", "Marketing demo"], a: 1, exp: "Purple teaming pairs red and blue to test specific ATT&CK techniques, identify gaps, and improve detection in a controlled, measurable way." },
+  { id: 164, domain: "OPS", q: "Which is a primary use of YARA rules?", choices: ["Network routing", "Pattern-based identification and classification of malware samples and files", "DHCP", "BGP"], a: 1, exp: "YARA rules use strings/conditions to identify malware families, hunt across collections, and integrate with EDR/email/sandbox." },
+  { id: 165, domain: "OPS", q: "Which is the BEST first response when a credential is suspected of compromise?", choices: ["Wait", "Disable/rotate credential, revoke active sessions and tokens, investigate scope", "Email user only", "Reboot DC"], a: 1, exp: "Containment of credential compromise requires immediate disable/rotate, revoke OAuth/refresh tokens, kill sessions, then investigate." },
+  { id: 166, domain: "OPS", q: "Which is the BEST cloud detection control for unusual root-account use in AWS?", choices: ["Ignore", "CloudTrail + GuardDuty + alerts on root usage, with MFA-enforced and key removed", "Use root daily", "Disable CloudTrail"], a: 1, exp: "Root use should be exceptional. Detection via CloudTrail events + GuardDuty findings; prevention via MFA, removed access keys, federated admin." },
+  { id: 167, domain: "OPS", q: "Which is the BEST mitigation for a noisy false-positive rule generating thousands of alerts?", choices: ["Disable rule entirely", "Refine logic with context (asset class, time, user role) and tune thresholds; create exclusions with rationale", "Ignore SOC", "Add another generic rule"], a: 1, exp: "Document and tune — never disable without analysis. Exclusions must be reviewed periodically to avoid blind spots." },
+  { id: 168, domain: "OPS", q: "Which is the BEST detection method for impossible-travel logins?", choices: ["Per-event review", "UEBA / sign-in risk policies correlating geo-IP and time-velocity across login events", "Manual log review only", "Disable MFA"], a: 1, exp: "Identity providers (Entra ID Identity Protection, Okta) and SIEMs use geo-IP + velocity to flag impossible travel; respond with MFA challenge/block." },
+  { id: 169, domain: "OPS", q: "Which is the BEST artifact for analyzing browser-based malware delivery?", choices: ["BIOS dump", "Browser history, downloads, cache, network captures, and EDR process tree", "Only registry", "DNS only"], a: 1, exp: "Correlate URL navigation, downloaded payload, child processes, and persistence indicators to reconstruct browser-borne incidents." },
+  { id: 170, domain: "OPS", q: "Which response is BEST when ransomware is confirmed encrypting endpoints?", choices: ["Pay quickly", "Isolate hosts, preserve evidence, disable propagation paths (admin shares, RMM), invoke IR plan and engage legal/IR retainer", "Reboot all servers", "Email staff to ignore"], a: 1, exp: "Containment first (network, identity, RMM, backups), then forensics and decisions about restoration and notification — never ad-hoc payment." },
+  { id: 171, domain: "OPS", q: "Which framework structures incident severity and escalation criteria?", choices: ["TOGAF", "Internal incident severity matrix mapped to RACI and external notifications", "OSI model", "MTU"], a: 1, exp: "A severity matrix with predefined triggers, RACI, and notification thresholds (legal, exec, regulator, customer) makes response repeatable." },
+  { id: 172, domain: "OPS", q: "Which is a primary purpose of post-incident review (lessons learned)?", choices: ["Punish", "Identify root cause, control gaps, and concrete actions to improve resilience", "Generate marketing", "End conversation"], a: 1, exp: "Blameless post-mortems generate prioritized actions: detection, response, training, architecture — the only way SOCs mature." },
+  { id: 173, domain: "OPS", q: "Which is the BEST control to detect cloud lateral movement via role assumption?", choices: ["Trust IAM", "Detection on AssumeRole chains, unusual session policies, and impossible cross-account hops", "Disable IAM", "Allow all"], a: 1, exp: "AssumeRole graph analysis (e.g., CloudTrail + tools like CloudTracker) reveals identity-driven lateral movement attackers use in the cloud." },
+  { id: 174, domain: "OPS", q: "Which is the role of an Indicator of Attack (IOA) feed in operations?", choices: ["Spam filter", "Provide behavioral signatures (TTPs) for ongoing detection beyond atomic IOCs", "DNS resolver", "License manager"], a: 1, exp: "IOA feeds describe adversary behaviors (e.g., specific PowerShell patterns, lsass access methods) — survive attacker IOC churn." },
+  { id: 175, domain: "OPS", q: "Which is the BEST detection control for a compromised SaaS OAuth grant abuse?", choices: ["Ignore OAuth", "Monitor consented apps, anomalous token use, sensitive scopes, and detect risky third-party app grants", "Disable email", "Block all SaaS"], a: 1, exp: "Illicit consent grant attacks abuse OAuth in M365/Google. Detect via app inventory, anomalous scopes, and revoke risky tokens." },
+  { id: 176, domain: "OPS", q: "Which is the BEST description of a 'detection-as-code' approach?", choices: ["Manual rule editing only", "Version-controlled detection content with CI/CD, testing, and peer review", "No documentation", "Spreadsheet of rules"], a: 1, exp: "Detection-as-code (Sigma/Splunk/KQL in Git) brings software engineering practices to detection: tests, reviews, releases, rollback." },
+  { id: 177, domain: "OPS", q: "Which is the primary purpose of an after-action report (AAR)?", choices: ["Praise individuals only", "Document timeline, root cause, response gaps, and prioritized improvements", "Replace IR plan", "Hide details"], a: 1, exp: "AARs convert experience into concrete actions and updated playbooks — the bridge from incident to improved resilience." },
+  { id: 178, domain: "OPS", q: "Which technology orchestrates cross-tool response actions (e.g., disable user + isolate host + ticket)?", choices: ["FTP", "SOAR with integrations", "DHCP", "SNMP"], a: 1, exp: "SOAR coordinates actions across IdP, EDR, ticketing, email, firewall, etc. — driven by playbooks for consistent rapid response." },
+  { id: 179, domain: "OPS", q: "Which is the BEST defense for SOC tooling against insider misuse?", choices: ["Shared admin", "Least privilege, immutable audit logs, role separation, dual control on sensitive actions", "No logging", "Disable monitoring"], a: 1, exp: "SOC platforms themselves require strict access control, audit logging, and dual control for destructive operations — the SOC must monitor itself." },
+  { id: 180, domain: "OPS", q: "Which is the BEST description of MDR (Managed Detection and Response)?", choices: ["DIY only", "Outsourced/co-managed 24x7 detection, threat hunting, and response on customer telemetry — typically EDR-driven", "License resale", "Email filtering only"], a: 1, exp: "MDR providers extend customer SOC capacity with 24x7 analysts, hunting, and remediation guidance — built around EDR/XDR + SIEM telemetry." },
+];
+
+const STORAGE_KEY = "secx_stats_v1";
+const DEFAULT_STATS = { totalAnswered: 0, totalCorrect: 0, byDomain: {}, byQuestion: {}, sessions: [] };
+
+let stats = loadStats();
+let session = null;
+let configState = { mode: "study", domain: "ALL", count: 25, weakOnly: false };
+let timerInterval = null;
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { ...DEFAULT_STATS };
+    return { ...DEFAULT_STATS, ...JSON.parse(raw) };
+  } catch { return { ...DEFAULT_STATS }; }
+}
+function saveStats() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stats)); } catch {} }
+
+const VIEWS = ["home", "mode", "quiz", "results", "stats"];
+function showView(name) {
+  VIEWS.forEach(v => document.getElementById("view-" + v).classList.toggle("hidden", v !== name));
+  document.getElementById("back-btn").classList.toggle("hidden", name === "home");
+  if (name === "home") renderHome();
+  if (name === "stats") renderStats();
+  window.scrollTo(0, 0);
+}
+
+function renderHome() {
+  const overallPct = stats.totalAnswered > 0 ? Math.round((stats.totalCorrect / stats.totalAnswered) * 100) : 0;
+  const ready = overallPct >= 75;
+  const titleEl = document.getElementById("status-title");
+  const infoEl = document.getElementById("status-info");
+  if (stats.totalAnswered === 0) {
+    titleEl.innerHTML = '<span style="color: var(--text-dim);">Awaiting first session...</span>';
+    infoEl.textContent = "";
+  } else if (ready) {
+    titleEl.innerHTML = '<svg class="icon-lg" viewBox="0 0 24 24" style="color: var(--emerald);"><polyline points="20 6 9 17 4 12"/></svg><span style="color: var(--emerald);">EXAM_READY</span>';
+    infoEl.textContent = `${stats.totalCorrect}/${stats.totalAnswered} correct · ${overallPct}% overall accuracy`;
+  } else {
+    titleEl.innerHTML = '<svg class="icon-lg" viewBox="0 0 24 24" style="color: var(--amber);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="color: var(--amber);">TRAINING_IN_PROGRESS</span>';
+    infoEl.textContent = `${stats.totalCorrect}/${stats.totalAnswered} correct · ${overallPct}% overall accuracy`;
+  }
+  const breakdownEl = document.getElementById("domain-breakdown");
+  breakdownEl.innerHTML = Object.values(DOMAINS).map(d => {
+    const ds = stats.byDomain[d.id];
+    const pct = ds ? Math.round((ds.correct / ds.answered) * 100) : 0;
+    return `<div class="domain-card">
+      <div class="domain-card-header">
+        <div class="domain-card-info">
+          <svg class="domain-icon" viewBox="0 0 24 24" style="color: ${d.color};">${d.iconPath}</svg>
+          <div><div class="domain-name">${d.name}</div><div class="domain-weight">${d.weight} of exam</div></div>
+        </div>
+        <div><div class="domain-pct" style="color: ${d.color};">${ds ? pct + "%" : "—"}</div>${ds ? `<div class="domain-frac">${ds.correct}/${ds.answered}</div>` : ""}</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%; background: ${d.color};"></div></div>
+    </div>`;
+  }).join("");
+  document.getElementById("question-count-label").textContent = `${QUESTIONS.length} questions loaded`;
+}
+
+function renderMode() {
+  const dt = document.getElementById("domain-tabs");
+  const allActive = configState.domain === "ALL" ? "active" : "";
+  dt.innerHTML = `<button class="domain-tab ${allActive}" data-domain="ALL" style="${allActive ? `border-color: var(--purple); color: var(--purple);` : ""}">ALL DOMAINS</button>
+    ${Object.values(DOMAINS).map(d => {
+      const active = configState.domain === d.id;
+      return `<button class="domain-tab ${active ? "active" : ""}" data-domain="${d.id}" style="${active ? `border-color: ${d.color}; color: ${d.color};` : ""}">${d.short}<div class="tab-weight">${d.weight}</div></button>`;
+    }).join("")}`;
+  document.querySelectorAll(".mode-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.mode === configState.mode));
+  document.querySelectorAll(".count-tab").forEach(btn => btn.classList.toggle("active", parseInt(btn.dataset.count) === configState.count));
+  document.getElementById("count-section").classList.toggle("hidden", configState.mode === "exam");
+  const weakToggle = document.getElementById("weak-toggle");
+  weakToggle.classList.toggle("hidden", stats.totalAnswered === 0);
+  document.getElementById("weak-checkbox").checked = configState.weakOnly;
+}
+
+function startQuiz() {
+  const { mode, domain, count, weakOnly } = configState;
+  let pool = domain === "ALL" ? [...QUESTIONS] : QUESTIONS.filter(q => q.domain === domain);
+  if (weakOnly) {
+    pool.sort((a, b) => {
+      const aS = stats.byQuestion[a.id] || { c: 0, w: 0 };
+      const bS = stats.byQuestion[b.id] || { c: 0, w: 0 };
+      return (bS.w - bS.c) - (aS.w - aS.c);
+    });
+  } else { pool.sort(() => Math.random() - 0.5); }
+  const finalCount = mode === "exam" ? Math.min(90, pool.length) : Math.min(count, pool.length);
+  // Shuffle each question's choices and remap the correct-answer index.
+  // The source bank has authoring bias toward index 1 ("B") — Fisher-Yates guarantees uniform distribution.
+  const shuffled = pool.slice(0, finalCount).map(q => {
+    const order = [0, 1, 2, 3];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return {
+      ...q,
+      choices: order.map(i => q.choices[i]),
+      a: order.indexOf(q.a),
+    };
+  });
+  session = { mode, questions: shuffled, currentIdx: 0, answers: {}, flagged: new Set(), startTime: Date.now(), timeLimit: mode === "exam" ? 165 * 60 * 1000 : null };
+  showView("quiz");
+  renderQuiz();
+  if (session.timeLimit) startTimer();
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    const remaining = session.timeLimit - (Date.now() - session.startTime);
+    if (remaining <= 0) { clearInterval(timerInterval); finishQuiz(); return; }
+    const total = Math.floor(remaining / 1000);
+    const m = Math.floor(total / 60).toString().padStart(2, "0");
+    const s = (total % 60).toString().padStart(2, "0");
+    document.getElementById("timer-text").textContent = `${m}:${s}`;
+    document.getElementById("timer").classList.toggle("warn", remaining < 10 * 60 * 1000);
+  }, 1000);
+}
+
+function renderQuiz() {
+  const q = session.questions[session.currentIdx];
+  const domain = DOMAINS[q.domain];
+  const userAnswer = session.answers[session.currentIdx];
+  const badge = document.getElementById("domain-badge");
+  badge.style.borderColor = domain.color;
+  badge.style.color = domain.color;
+  badge.innerHTML = `<svg class="icon" viewBox="0 0 24 24">${domain.iconPath}</svg>${domain.short.toUpperCase()}`;
+  document.getElementById("q-counter").textContent = `Q${session.currentIdx + 1}/${session.questions.length}`;
+  const answeredCount = Object.keys(session.answers).length;
+  document.getElementById("answered-counter").textContent = `· Answered: ${answeredCount}`;
+  const flaggedEl = document.getElementById("flagged-counter");
+  if (session.flagged.size > 0) { flaggedEl.style.display = ""; flaggedEl.textContent = `· Flagged: ${session.flagged.size}`; }
+  else { flaggedEl.style.display = "none"; }
+  document.getElementById("timer").classList.toggle("hidden", !session.timeLimit);
+  document.getElementById("progress-fill").style.width = (((session.currentIdx + 1) / session.questions.length) * 100) + "%";
+  document.getElementById("question-text").textContent = q.q;
+  document.getElementById("flag-btn").classList.toggle("flagged", session.flagged.has(session.currentIdx));
+  const choicesEl = document.getElementById("choices");
+  const showFeedback = session.mode === "study" && userAnswer !== undefined;
+  choicesEl.innerHTML = q.choices.map((c, idx) => {
+    const isSelected = userAnswer === idx;
+    const isCorrect = idx === q.a;
+    let cls = "choice";
+    if (showFeedback && isSelected && isCorrect) cls += " correct";
+    else if (showFeedback && isSelected && !isCorrect) cls += " incorrect";
+    else if (showFeedback && isCorrect) cls += " reveal-correct";
+    else if (isSelected) cls += " selected";
+    if (showFeedback) cls += " locked";
+    let icon = "";
+    if (showFeedback && isCorrect) icon = '<svg class="choice-icon" viewBox="0 0 24 24" style="color: var(--emerald);"><polyline points="20 6 9 17 4 12"/></svg>';
+    else if (showFeedback && isSelected && !isCorrect) icon = '<svg class="choice-icon" viewBox="0 0 24 24" style="color: var(--red);"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    return `<button class="${cls}" data-choice="${idx}" ${showFeedback ? "disabled" : ""}>
+      <div class="choice-letter">${String.fromCharCode(65 + idx)}</div>
+      <div class="choice-text">${escapeHtml(c)}</div>${icon}
+    </button>`;
+  }).join("");
+  const fb = document.getElementById("feedback");
+  if (showFeedback) {
+    const correct = userAnswer === q.a;
+    fb.className = "feedback " + (correct ? "correct" : "incorrect");
+    fb.innerHTML = `<div class="feedback-label">${correct ? "✓ CORRECT" : "✗ INCORRECT"}</div><div class="feedback-text">${escapeHtml(q.exp)}</div>`;
+    fb.classList.remove("hidden");
+  } else { fb.classList.add("hidden"); }
+  document.getElementById("prev-btn").disabled = session.currentIdx === 0;
+  document.getElementById("nav-counter").textContent = `${answeredCount}/${session.questions.length}`;
+  const nextBtn = document.getElementById("next-btn");
+  if (session.currentIdx === session.questions.length - 1) { nextBtn.textContent = "SUBMIT EXAM"; nextBtn.className = "btn-submit"; }
+  else { nextBtn.textContent = "NEXT →"; nextBtn.className = "btn-next"; }
+  const qnSection = document.getElementById("quick-nav-section");
+  if (session.mode === "exam") {
+    qnSection.classList.remove("hidden");
+    document.getElementById("quick-nav-grid").innerHTML = session.questions.map((_, i) => {
+      let cls = "quick-nav-btn";
+      if (i === session.currentIdx) cls += " current";
+      else if (session.flagged.has(i)) cls += " flagged";
+      else if (session.answers[i] !== undefined) cls += " answered";
+      return `<button class="${cls}" data-jump="${i}">${i + 1}</button>`;
+    }).join("");
+  } else { qnSection.classList.add("hidden"); }
+}
+
+function answerQuestion(idx) {
+  if (session.mode === "study" && session.answers[session.currentIdx] !== undefined) return;
+  session.answers[session.currentIdx] = idx;
+  renderQuiz();
+}
+function nextQuestion() {
+  if (session.currentIdx === session.questions.length - 1) finishQuiz();
+  else { session.currentIdx++; renderQuiz(); }
+}
+function prevQuestion() { if (session.currentIdx > 0) { session.currentIdx--; renderQuiz(); } }
+function jumpToQuestion(idx) { session.currentIdx = idx; renderQuiz(); }
+function toggleFlag() {
+  if (session.flagged.has(session.currentIdx)) session.flagged.delete(session.currentIdx);
+  else session.flagged.add(session.currentIdx);
+  renderQuiz();
+}
+
+function finishQuiz() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  const { questions, answers } = session;
+  let correct = 0;
+  questions.forEach((q, i) => {
+    const ans = answers[i];
+    const isCorrect = ans === q.a;
+    if (isCorrect) correct++;
+    stats.byDomain[q.domain] = stats.byDomain[q.domain] || { answered: 0, correct: 0 };
+    stats.byDomain[q.domain].answered++;
+    if (isCorrect) stats.byDomain[q.domain].correct++;
+    stats.byQuestion[q.id] = stats.byQuestion[q.id] || { c: 0, w: 0 };
+    if (isCorrect) stats.byQuestion[q.id].c++;
+    else if (ans !== undefined) stats.byQuestion[q.id].w++;
+  });
+  stats.totalAnswered += questions.length;
+  stats.totalCorrect += correct;
+  const sessionRecord = { date: new Date().toISOString(), mode: session.mode, total: questions.length, correct, score: Math.round((correct / questions.length) * 100), duration: Math.round((Date.now() - session.startTime) / 1000) };
+  stats.sessions = [sessionRecord, ...stats.sessions].slice(0, 50);
+  saveStats();
+  session.correct = correct;
+  session.finished = true;
+  renderResults();
+  showView("results");
+}
+
+function renderResults() {
+  const { questions, answers, correct, mode } = session;
+  const score = Math.round((correct / questions.length) * 100);
+  const passed = score >= 75;
+  const duration = Math.round((Date.now() - session.startTime) / 1000);
+  const banner = document.getElementById("score-banner");
+  banner.className = "score-banner " + (passed ? "passed" : "failed");
+  document.getElementById("score-label").textContent = passed ? "// EXAM_READY_STATUS_ACHIEVED" : "// CONTINUE_TRAINING";
+  document.getElementById("score-icon").innerHTML = passed ? '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' : '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>';
+  document.getElementById("score-num").textContent = score;
+  document.getElementById("score-fraction").textContent = `${correct}/${questions.length} correct`;
+  const m = Math.floor(duration / 60), s = duration % 60;
+  document.getElementById("score-meta").textContent = `Duration: ${m}m ${s}s · ${mode.toUpperCase()} mode`;
+  if (mode === "exam") {
+    document.getElementById("score-note").textContent = `SecurityX is pass/fail (no scaled score published). ${passed ? "Strong showing — keep reinforcing weak domains." : "Keep building. Drill weak domains and re-run."}`;
+  } else { document.getElementById("score-note").textContent = ""; }
+  const byDomain = {};
+  questions.forEach((q, i) => {
+    byDomain[q.domain] = byDomain[q.domain] || { total: 0, correct: 0 };
+    byDomain[q.domain].total++;
+    if (answers[i] === q.a) byDomain[q.domain].correct++;
+  });
+  document.getElementById("domain-results").innerHTML = Object.entries(byDomain).map(([id, d]) => {
+    const dom = DOMAINS[id];
+    const pct = Math.round((d.correct / d.total) * 100);
+    return `<div class="domain-card">
+      <div class="domain-card-header">
+        <div class="domain-card-info"><svg class="domain-icon" viewBox="0 0 24 24" style="color: ${dom.color};">${dom.iconPath}</svg><div class="domain-name">${dom.name}</div></div>
+        <div class="domain-pct" style="color: ${dom.color};">${pct}%</div>
+      </div>
+      <div class="domain-frac" style="text-align: left; margin-bottom: 0.5rem;">${d.correct} of ${d.total} correct</div>
+      <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%; background: ${dom.color};"></div></div>
+    </div>`;
+  }).join("");
+  const wrong = questions.map((q, i) => ({ ...q, idx: i, userAnswer: answers[i] })).filter(q => q.userAnswer !== q.a);
+  const reviewSection = document.getElementById("review-section");
+  if (wrong.length > 0) {
+    reviewSection.classList.remove("hidden");
+    document.getElementById("review-label").textContent = `// REVIEW_INCORRECT [${wrong.length}]`;
+    document.getElementById("review-list").innerHTML = wrong.slice(0, 30).map(q => {
+      const dom = DOMAINS[q.domain];
+      const userAnsHtml = q.userAnswer !== undefined ? `<div class="your-ans"><span class="ans-label">Your answer:</span> ${String.fromCharCode(65 + q.userAnswer)}. ${escapeHtml(q.choices[q.userAnswer])}</div>` : '<div class="your-ans"><span class="ans-label">Your answer:</span> (skipped)</div>';
+      return `<details class="review-item">
+        <summary class="review-summary"><span class="review-badge" style="color: ${dom.color}; border-color: ${dom.color};">${dom.short.toUpperCase()}</span>${escapeHtml(q.q)}</summary>
+        <div class="review-body">${userAnsHtml}<div class="correct-ans"><span class="ans-label">Correct:</span> ${String.fromCharCode(65 + q.a)}. ${escapeHtml(q.choices[q.a])}</div><div class="explanation">${escapeHtml(q.exp)}</div></div>
+      </details>`;
+    }).join("") + (wrong.length > 30 ? `<div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;">+ ${wrong.length - 30} more incorrect</div>` : "");
+  } else { reviewSection.classList.add("hidden"); }
+}
+
+function renderStats() {
+  const overallPct = stats.totalAnswered > 0 ? Math.round((stats.totalCorrect / stats.totalAnswered) * 100) : 0;
+  document.getElementById("stat-overview").innerHTML = `
+    <div class="stat-card"><div class="stat-card-label">Sessions</div><div class="stat-card-value" style="color: var(--purple);">${stats.sessions.length}</div></div>
+    <div class="stat-card"><div class="stat-card-label">Total Answered</div><div class="stat-card-value" style="color: var(--pink);">${stats.totalAnswered}</div></div>
+    <div class="stat-card"><div class="stat-card-label">Correct</div><div class="stat-card-value" style="color: var(--emerald);">${stats.totalCorrect}</div></div>
+    <div class="stat-card"><div class="stat-card-label">Overall Accuracy</div><div class="stat-card-value" style="color: ${overallPct >= 75 ? "var(--emerald)" : "var(--amber)"};">${overallPct}%</div></div>`;
+  document.getElementById("stats-domains").innerHTML = Object.values(DOMAINS).map(d => {
+    const ds = stats.byDomain[d.id];
+    const pct = ds ? Math.round((ds.correct / ds.answered) * 100) : 0;
+    return `<div class="domain-card">
+      <div class="domain-card-header">
+        <div class="domain-card-info"><svg class="domain-icon" viewBox="0 0 24 24" style="color: ${d.color};">${d.iconPath}</svg><span class="domain-name">${d.name}</span><span class="domain-weight">(${d.weight})</span></div>
+        <div><span style="color: ${d.color}; font-weight: 700;">${ds ? pct + "%" : "—"}</span>${ds ? `<span style="color: var(--text-muted); font-size: 0.7rem; margin-left: 0.5rem;">${ds.correct}/${ds.answered}</span>` : ""}</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%; background: ${d.color};"></div></div>
+    </div>`;
+  }).join("");
+  const sessionsWrap = document.getElementById("stats-sessions-wrap");
+  if (stats.sessions.length > 0) {
+    sessionsWrap.classList.remove("hidden");
+    document.getElementById("stats-sessions").innerHTML = `<div class="session-row header"><div>DATE</div><div>MODE</div><div>QUESTIONS</div><div>SCORE</div><div>DURATION</div></div>
+      ${stats.sessions.slice(0, 15).map(s => {
+        const d = new Date(s.date);
+        const dateStr = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+        const scoreCls = s.score >= 75 ? "high" : s.score >= 60 ? "mid" : "low";
+        return `<div class="session-row data">
+          <div style="color: var(--text-dim);">${dateStr}</div>
+          <div class="session-mode" style="color: var(--text);">${s.mode}</div>
+          <div style="color: var(--text);">${s.correct}/${s.total}</div>
+          <div class="session-score ${scoreCls}">${s.score}%</div>
+          <div style="color: var(--text-muted);">${Math.floor(s.duration / 60)}m ${s.duration % 60}s</div>
+        </div>`;
+      }).join("")}`;
+  } else { sessionsWrap.classList.add("hidden"); }
+  const resetSection = document.getElementById("reset-section");
+  resetSection.innerHTML = `<button class="btn btn-danger" id="reset-btn"><svg width="12" height="12" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>RESET ALL PROGRESS</button>`;
+  document.getElementById("reset-btn").addEventListener("click", showResetConfirm);
+}
+
+function showResetConfirm() {
+  const resetSection = document.getElementById("reset-section");
+  resetSection.innerHTML = `<div class="reset-confirm-row"><span class="warning">Erase all stats?</span><button class="btn btn-confirm" id="confirm-reset-btn">CONFIRM</button><button class="btn" id="cancel-reset-btn">CANCEL</button></div>`;
+  document.getElementById("confirm-reset-btn").addEventListener("click", () => { stats = { ...DEFAULT_STATS }; saveStats(); renderStats(); });
+  document.getElementById("cancel-reset-btn").addEventListener("click", renderStats);
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+document.getElementById("back-btn").addEventListener("click", () => { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } showView("home"); });
+document.getElementById("analytics-btn").addEventListener("click", () => showView("stats"));
+document.querySelectorAll(".mode-card").forEach(card => card.addEventListener("click", () => { configState.mode = card.dataset.action; renderMode(); showView("mode"); }));
+document.querySelectorAll(".mode-tab").forEach(btn => btn.addEventListener("click", () => { configState.mode = btn.dataset.mode; renderMode(); }));
+document.getElementById("domain-tabs").addEventListener("click", e => { const btn = e.target.closest(".domain-tab"); if (!btn) return; configState.domain = btn.dataset.domain; renderMode(); });
+document.querySelectorAll(".count-tab").forEach(btn => btn.addEventListener("click", () => { configState.count = parseInt(btn.dataset.count); renderMode(); }));
+document.getElementById("weak-checkbox").addEventListener("change", e => { configState.weakOnly = e.target.checked; });
+document.getElementById("start-btn").addEventListener("click", startQuiz);
+document.getElementById("choices").addEventListener("click", e => { const btn = e.target.closest(".choice"); if (!btn) return; answerQuestion(parseInt(btn.dataset.choice)); });
+document.getElementById("flag-btn").addEventListener("click", toggleFlag);
+document.getElementById("prev-btn").addEventListener("click", prevQuestion);
+document.getElementById("next-btn").addEventListener("click", nextQuestion);
+document.getElementById("quick-nav-grid").addEventListener("click", e => { const btn = e.target.closest(".quick-nav-btn"); if (!btn) return; jumpToQuestion(parseInt(btn.dataset.jump)); });
+document.getElementById("results-home").addEventListener("click", () => showView("home"));
+document.getElementById("results-retry").addEventListener("click", () => { configState.weakOnly = true; configState.domain = "ALL"; configState.count = session.questions.length; configState.mode = session.mode; startQuiz(); });
+
+showView("home");
+</script>
+</body>
+</html>
