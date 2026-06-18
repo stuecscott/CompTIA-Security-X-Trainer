@@ -29,11 +29,11 @@ Built as a single HTML file with **180 questions** mapped to the official CompTI
 
 | Domain | Weight | Questions |
 |---|---|---|
-| Governance, Risk, and Compliance | 20% | 36 |
-| Security Architecture | 27% | 50 |
-| Security Engineering | 31% | 55 |
-| Security Operations | 22% | 39 |
-| **Total** | **100%** | **180** |
+| Governance, Risk, and Compliance | 20% | 55 |
+| Security Architecture | 27% | 73 |
+| Security Engineering | 31% | 83 |
+| Security Operations | 22% | 57 |
+| **Total** | **100%** | **268** |
 
 ### Topics Covered
 
