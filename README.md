@@ -11,7 +11,7 @@ Built as a single HTML file with **180 questions** mapped to the official CompTI
 
 ## Features
 
-- **180 questions** across all 4 official exam domains, weighted to match the real exam
+- **268 questions** across all 4 official exam domains, weighted to match the real exam
 - **Three modes:**
   - **Study** — answer-by-answer with explanations revealed immediately
   - **Practice** — pick a domain and question count, scored at the end
